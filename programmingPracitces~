@@ -1,0 +1,17 @@
+PROGRAMMING PRACTICES
+
+1. No changes to the database fields must be made without discussing it.
+2. All settings (including database settings) must be put in the settings file. Nothing should be hardcoded.Like even coefficients for the algorithm.
+3. Names of variables must reflect its purpose.
+4. Commenting is compulsory.
+5. Indentation is compulsory
+6. Form validation is compulsory.
+
+Use filter_var($str, FILTER_SANITIZE_STRING);
+  $data = trim($data);
+  $data = stripslashes($data);
+  $data = htmlspecialchars($data);
+  
+  
+7. All objects should be accessed using their id, not any other attribute like name (like for UPDATE statements)
+8. Do not push broken versions.

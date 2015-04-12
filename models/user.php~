@@ -1,0 +1,21 @@
+<?php
+ 
+class User
+{
+  public $userId;
+  public $username;
+  public $name;
+  public $email;
+  public $password;
+  public $age;
+  public $country;
+  public $dob;
+  public $workCollege;
+  
+  public function save()
+  {
+      $this->prop1 = $newval;
+  }
+ 
+  
+}

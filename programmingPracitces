@@ -3,8 +3,8 @@ PROGRAMMING PRACTICES
 1. No changes to the database fields must be made without discussing it.
 2. All settings (including database settings) must be put in the settings file. Nothing should be hardcoded.Like even coefficients for the algorithm.
 3. Names of variables must reflect its purpose.
-4. Commenting is compulsory.
-5. Indentation is compulsory
+4. Commenting and indentation is compulsory.
+5. All SQL statements as far as possible must be written in the class files.
 6. Form validation is compulsory.
 
 Use filter_var($str, FILTER_SANITIZE_STRING);

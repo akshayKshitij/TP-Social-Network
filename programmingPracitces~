@@ -15,3 +15,5 @@ Use filter_var($str, FILTER_SANITIZE_STRING);
   
 7. All objects should be accessed using their id, not any other attribute like name (like for UPDATE statements)
 8. Do not push broken versions.
+9. But keep commiting on your computer as soon as you make even small progress. Comment every commit well.
+10. Before starting - always check which branch you are on using 'git branch' and pull before you start working.

@@ -3,7 +3,7 @@
 class Database
 {
 	public static $username = "root";
-	public static $password = "";
+	public static $password = "aau";
 	public static $servername = "localhost";
 	public static $db = "tp";
 

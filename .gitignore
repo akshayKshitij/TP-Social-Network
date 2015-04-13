@@ -1,0 +1,17 @@
+# Numerous always-ignore extensions
+*.diff
+*.err
+*.orig
+*.log
+*.rej
+*.swo
+*.swp
+*.zip
+*.vi
+*~
+*.php~
+*.html~
+
+#profile uploads
+profile_photos_uploads/
+

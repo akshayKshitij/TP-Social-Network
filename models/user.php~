@@ -22,8 +22,7 @@ class User
   public static function getUser($id)
   {
   	// Create connection
-	$conn = new mysqli(self::$servername, self::$username,self::$password,self::$db);
-
+	$conn = new mysqli(Database::$servername, Database::$username,Database::$password,Database::$db);
 	// Check connection
 	if ($conn->connect_error) 
 	{

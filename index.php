@@ -1,4 +1,7 @@
 <!DOCTYPE html>
+<?php
+//i am awesome
+?>
 <html>
 <body>
 

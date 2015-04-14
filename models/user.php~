@@ -38,7 +38,7 @@ class User
     {
     	// Start the session
 		session_start();
-		$_SESSION["user_id"] = $_POST['user_id'];
+		$_SESSION["user_id"] = $row['user_id'];
 		
 		$a=Settings::$mainPageAddress;
 		header("Location: $a/main_pages/profile_page.php");

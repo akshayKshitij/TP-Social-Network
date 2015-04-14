@@ -169,7 +169,7 @@ class User
 	else 
 	{
 	    $friends=null;
-	    echo "NO POST FOUND";
+	    echo "NO FRIEND FOUND";
 	}
 	$conn->close();
 	return $friends;

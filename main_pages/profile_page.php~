@@ -18,6 +18,7 @@ $user=User::getUser($_SESSION['user_id']);
 <script src="../js/bootstrap.min.js"></script>
 <script src="../js/select2.js"></script>
 <script src="../js/jquery.toaster.js"></script>
+<script src="../js/ckeditor/ckeditor.js"></script>
 
 
 <!--JAVASCRIPT-->
@@ -38,23 +39,59 @@ function showFriends(id)
     
 }
 
-//not implemented yet
+
 function deletePost(postid)
 {
-	/*
+	
 	var xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function() 
     {
         if (xmlhttp.readyState == 4 && xmlhttp.status == 200) 
         {
 			var parent = document.getElementById("content");
-			var child = document.getElementById("p1");
+			var child = document.getElementById("postNo"+postid);
 			parent.removeChild(child);
+			$.toaster({ priority : 'success', title : 'TP', message : "The Post has been deleted."});
         }
     }
     xmlhttp.open("GET", "deletePost.php?q=" + postid.toString(), true);
     xmlhttp.send();
-    */
+   
+}
+
+function addPost(userid)
+{
+	var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function() 
+    {
+        if (xmlhttp.readyState == 4 && xmlhttp.status == 200) 
+        {
+        	
+        	post_id=parseInt(xmlhttp.responseText.split(",")[0]);
+        	
+			var newPost='<div id="postNo'+post_id+'">';
+			
+			newPost+= '<h4><img src="uploads/'+userid+'.jpg" alt="Profile Photo" width="50" height="65" > &nbsp &nbsp';
+			
+			newPost+= "Post by :"+ xmlhttp.responseText.split(",")[1];
+			/*
+			newPost+= '<button class="btn btn-sm btn-danger pull-right" onclick="deletePost('+post_id+')">Delete Post</button></h4>';
+			newPost+= CKEDITOR.instances['new_post'].getData();
+		*/
+			newPost+="<br> <hr> <br>";
+		
+			newPost+= '</div>';
+	
+        	$( "#content" ).prepend(newPost);
+			$.toaster({ priority : 'success', title : 'TP', message : "The Post has been added."});
+			CKEDITOR.instances['new_post'].setData(" ");
+			
+			alert(xmlhttp.responseText);
+        }
+    }
+    xmlhttp.open("GET", "addPost.php?q=" + userid.toString() +"&r=" + CKEDITOR.instances['new_post'].getData(), true);
+    xmlhttp.send();
+   
 }
 </script>
 </head>
@@ -126,7 +163,7 @@ function deletePost(postid)
 				<br><br>
 					 
 				<ul class="nav nav-pills nav-stacked">
-				<li class="active"><a href="#">View Profile Page</a></li>
+				<li class="active"><a href="#">View POSTS</a></li>
 				<li><a href="#" onclick="showFriends(<?php echo $user->userId ?>)">View Friends</a></li>
 				<li><a href="#">View Friend Requests</a></li>
 				<li><a href="#">Post a new Question</a></li>
@@ -136,18 +173,26 @@ function deletePost(postid)
 
 		<div class="col-lg-9">
 				<h3 id="heading"> POSTS </h3>
+				<div style="margin-left:30px;margin-right:30px;">
+						<textarea id="new_post" name="new_post" placeholder="Enter text for the post"> </textarea> 
+						<br>
+						<button class="btn btn-md btn-primary" onclick="addPost(<?php echo $user->userId ?>)">Add Post</button>
+				</div>
 				<div id="content" style="margin-left:30px;margin-right:30px;">
+				
+				
 					<?php
 						$posts=$user->getPosts();
 						//echo implode(" ",$posts);
 						$size=count($posts);
 						for ($i=0;$i<$size;$i++)
 						{
-							$temp=$posts[$i];
+							$temp=$posts[$size-$i-1];
+							//Enclose the Post in a div which has id as its post_id.
 							echo '<div id="postNo'.$temp['post_id'].'">';
 							echo '<h4><img src="uploads/'.$temp["poster_id"].'.jpg" alt="Profile Photo" width="50" height="65" > &nbsp &nbsp';
 							echo "Post by :". User::getUser($temp['poster_id'])->name;
-							echo '<button class="btn btn-xs btn-danger pull-right" onclick="deletePost('.$temp['post_id'].')">Delete Post</button></h4>';
+							echo '<button class="btn btn-sm btn-danger pull-right" onclick="deletePost('.$temp['post_id'].')">Delete Post</button></h4>';
 							echo $temp['Text'];
 							
 							$comments=Post::getComments($temp['post_id']);
@@ -169,5 +214,9 @@ function deletePost(postid)
 
 </div>
 
+<script>
+CKEDITOR.replace('new_post', {height: 100});
+
+</script>
 </body>
 </html>

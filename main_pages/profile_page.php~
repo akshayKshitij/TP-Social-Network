@@ -99,6 +99,7 @@ function addPost(userid)
 <!--BOOTSTRAP COLUMN LAYOUT-->
 <div class="row">
 		 <div class="col-lg-3" style="color:black">
+		 	<!--Sidebar-->
 		 	<?php include 'sidebar.php'; ?>
 		 	
 		</div>

@@ -100,8 +100,7 @@ function addPost(userid)
 <div class="row">
 		 <div class="col-lg-3" style="color:black">
 		 	<!--Sidebar-->
-		 	<?php include 'sidebar.php'; ?>
-		 	
+		 	<?php include 'sidebar.php'; ?>		 	
 		</div>
 
 		<div class="col-lg-9">

@@ -16,9 +16,64 @@ class User
   //Use this while logging in.
   public function save()
   {
-      
+    $conn = new mysqli(Database::$servername, Database::$username,Database::$password,Database::$db);
+    if (!$conn) 
+    {
+        die("Connection failed: " . mysqli_connect_error());
+    }
+    $namesearch=$this->username;
+    $sql="SELECT * FROM User where username='$namesearch'";
+    $result=mysqli_query($conn,$sql);
+    $row=mysqli_fetch_assoc($result);
+    $passdb=$row['password'];
+
+    $k=0;
+    
+    if(password_verify($this->password,$passdb))
+    {
+        $k=1;
+    }
+
+    if($row['username']==$this->username and $k==1)
+    {
+        echo "EUREKA";
+    }
+
+    else
+    {
+        echo "INVALID USERNAME OR PASSWORD";
+        echo "<br><a href='login.html'>CLICK HERE TO TRY AGAIN</a><br>";
+    }
+
+    
   }
- 
+  public function register()
+  {
+    $conn = new mysqli(Database::$servername, Database::$username,Database::$password,Database::$db);
+
+    if (!$conn) {
+        die("Connection failed: " . mysqli_connect_error());
+    }
+    $hash=password_hash($this->password, PASSWORD_DEFAULT);
+    $sql="SELECT * FROM User where username='$this->username'";
+    $result=mysqli_query($conn,$sql);
+    $row=mysqli_fetch_assoc($result);
+    $id=1;
+    if($row['username']==$this->username){
+
+    $mess="USERNAME IS ALREADY IN USE PLEASE GO BACK AND CHOOSE ANOTHER";
+    }
+    else{
+    
+    $sql1="INSERT INTO User (name,username,email,password,age,country,gender,dob) VALUES ('".$this->name."', '".$this->username."','".$this->email."','".$hash."','".$this->age."','".$this->country."','".$this->gender."','".$this->date."')";
+    mysqli_query($conn,$sql1);
+
+    $mess="registration successful";
+    }
+    echo $mess;
+  
+  } 
+
   public static function getUser($id)
   {
   	// Create connection

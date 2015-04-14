@@ -38,10 +38,10 @@ class User
     {
     	// Start the session
 		session_start();
-		$_SESSION["user_id"] = $_POST['user_id'];
+		$_SESSION["user_id"] = $row['user_id'];
 		
 		$a=Settings::$mainPageAddress;
-		header("Location: $a/main_pages/profile_page.html");
+		header("Location: $a/main_pages/profile_page.php");
 		die();
     }
 
@@ -67,18 +67,15 @@ class User
     $row=mysqli_fetch_assoc($result);
     $id=1;
     if($row['username']==$this->username){
-
-    $mess="USERNAME IS ALREADY IN USE PLEASE GO BACK AND CHOOSE ANOTHER";
+    	$mess="USERNAME IS ALREADY IN USE PLEASE GO BACK AND CHOOSE ANOTHER";
     }
     else{
-    
-    $sql1="INSERT INTO User (name,username,email,password,age,country,gender,dob) VALUES ('".$this->name."', '".$this->username."','".$this->email."','".$hash."','".$this->age."','".$this->country."','".$this->gender."','".$this->date."')";
-    mysqli_query($conn,$sql1);
+		$sql1="INSERT INTO User (name,username,email,password,age,country,gender,dob) VALUES ('".$this->name."', '".$this->username."','".$this->email."','".$hash."','".$this->age."','".$this->country."','".$this->gender."','".$this->date."')";
+		mysqli_query($conn,$sql1);
 
-    $mess="registration successful";
+		$mess="registration successful <br><a href='login.html'>CLICK HERE TO LOGIN</a><br>";
     }
     echo $mess;
-  
   } 
 
   public static function getUser($id)

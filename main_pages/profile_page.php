@@ -3,7 +3,8 @@ require '../models/user.php';
 require '../models/friendClasses.php'; 
 //require 'getFriends.php'; 
 require '../models/wallClasses.php';
-$user=User::getUser($_POST['user_id']);
+session_start();
+$user=User::getUser($_SESSION['user_id']);
 ?>
 
 <!DOCTYPE html>
@@ -125,7 +126,7 @@ function deletePost(postid)
 				<br><br>
 					 
 				<ul class="nav nav-pills nav-stacked">
-				<li class="active"><a href="#">View Profile Page</a></li>
+				<li class="active"><a href="#">View POSTS</a></li>
 				<li><a href="#" onclick="showFriends(<?php echo $user->userId ?>)">View Friends</a></li>
 				<li><a href="#">View Friend Requests</a></li>
 				<li><a href="#">Post a new Question</a></li>

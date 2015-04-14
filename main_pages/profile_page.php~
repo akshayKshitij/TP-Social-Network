@@ -3,10 +3,8 @@ require '../models/user.php';
 require '../models/friendClasses.php'; 
 //require 'getFriends.php'; 
 require '../models/wallClasses.php';
-// Start the session
 session_start();
-$_SESSION["user_id"] = $_POST['user_id'];
-$user=User::getUser($_POST['user_id']);
+$user=User::getUser($_SESSION['user_id']);
 ?>
 
 <!DOCTYPE html>

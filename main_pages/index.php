@@ -7,6 +7,6 @@
     <input type="file" name="fileToUpload" id="fileToUpload">
     <input type="submit" value="Upload Image" name="submit">
 </form>
-<img src="2.jpg" alt="HTML5 Icon" width="128" height="128">
+<img src="uploads/2.jpg" alt="HTML5 Icon" width="128" height="128">
 </body>
 </html>

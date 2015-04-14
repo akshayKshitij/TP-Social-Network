@@ -1,20 +1,20 @@
 <?php
 
-public Class Friends
+Class Friends
 {
 	public $id1;
  	public $id2;
 }
  
 
-public Class FriendRequests
+Class FriendRequests
 {
 	public $senderId;
 	//The person who made the friend request.
  	public $receiverId;
 }
 
-public Class Interest
+Class Interest
 {
 	//just a primary key. 
 	public $entryId;

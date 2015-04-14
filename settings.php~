@@ -3,10 +3,10 @@
 class Database
 {
 	public static $username = "root";
-	public static $password = "aau";
+	public static $password = "";
 	public static $servername = "localhost";
 	public static $db = "tp";
-
+	public static $mainPageAddress="http://localhost/tp/TP-Social-Network";
 }
 
 

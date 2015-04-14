@@ -1,14 +1,7 @@
-<!DOCTYPE html>
 <?php
-//i am awesome
+require 'settings.php';
+$a=Settings::$mainPageAddress;
+header("Location: $a/main_pages/login.html");
+die();
 ?>
-<html>
-<body>
 
-<form action="main_pages/profile_page.php" method="post">
-Id: <input type="text" name="user_id"><br>
-<input type="submit">
-</form>
-
-</body>
-</html>

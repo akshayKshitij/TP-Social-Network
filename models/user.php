@@ -33,10 +33,16 @@ class User
     {
         $k=1;
     }
-
+	//If everything is successfull. Send to the profile page.
     if($row['username']==$this->username and $k==1)
     {
-        echo "EUREKA";
+    	// Start the session
+		session_start();
+		$_SESSION["user_id"] = $_POST['user_id'];
+		
+		$a=Settings::$mainPageAddress;
+		header("Location: $a/main_pages/profile_page.html");
+		die();
     }
 
     else
@@ -47,6 +53,7 @@ class User
 
     
   }
+  
   public function register()
   {
     $conn = new mysqli(Database::$servername, Database::$username,Database::$password,Database::$db);

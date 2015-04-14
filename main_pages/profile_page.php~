@@ -149,7 +149,7 @@ function deletePost(postid)
 							echo '<div id="postNo'.$temp['post_id'].'">';
 							echo '<h4><img src="uploads/'.$temp["poster_id"].'.jpg" alt="Profile Photo" width="50" height="65" > &nbsp &nbsp';
 							echo "Post by :". User::getUser($temp['poster_id'])->name;
-							echo '<button class="btn btn-xs btn-danger pull-right" onclick=deletePost('.$temp['post_id'].')">Delete Post</button></h4>';
+							echo '<button class="btn btn-xs btn-danger pull-right" onclick="deletePost('.$temp['post_id'].')">Delete Post</button></h4>';
 							echo $temp['Text'];
 							
 							$comments=Post::getComments($temp['post_id']);

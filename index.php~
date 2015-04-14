@@ -1,10 +1,6 @@
-<!DOCTYPE html>
-<html>
-<body>
+<?php
+require 'settings.php';
+header("Location: $mainPageAddress/main_pages/login.html");
+die();
+?>
 
-<form action="main_pages/profile_page.php" method="post">
-Id: <input type="text" name="user_id"><br>
-<input type="submit">
-</form>
-
-</body>

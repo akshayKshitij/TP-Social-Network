@@ -25,9 +25,8 @@ if ($_FILES["fileToUpload"]["size"] > 2500000) {
     $uploadOk = 0;
 }
 // Allow certain file formats
-if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
-&& $imageFileType != "gif" ) {
-    echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
+if($imageFileType != "jpg") {
+    echo "Sorry, only JPG files are allowed.";
     $uploadOk = 0;
 }
 // Check if $uploadOk is set to 0 by an error
@@ -35,10 +34,14 @@ if ($uploadOk == 0) {
     echo "Sorry, your file was not uploaded.";
 // if everything is ok, try to upload file
 } else {
-    if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_dir ."a.jpg")) {
-        echo "The file ". basename( $_FILES["fileToUpload"]["name"]). " has been uploaded.";
+    if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_dir .$_POST["userid"].".jpg")) {
+        echo 'The file '. basename( $_FILES["fileToUpload"]["name"]). ' has been uploaded.<a href="profile_page.php">Click here to go back</a>';
+        require '../settings.php';
+		$a=Settings::$mainPageAddress;
+		header("Location: $a/main_pages/profile_page.php");
+		die();
     } else {
-        echo "Sorry, there was an error uploading your file.";
+        echo 'Sorry, there was an error uploading your file.<a href="profile_page.php">Click here to go back</a>';
     }
 }
 ?>

@@ -23,23 +23,6 @@ $user=User::getUser($_SESSION['user_id']);
 
 <!--JAVASCRIPT-->
 <script>
-function showFriends(id)
-{
-	document.getElementById("heading").innerHTML = "FRIENDS";
-	var xmlhttp = new XMLHttpRequest();
-    xmlhttp.onreadystatechange = function() 
-    {
-        if (xmlhttp.readyState == 4 && xmlhttp.status == 200) 
-        {
-                document.getElementById("content").innerHTML = xmlhttp.responseText;
-        }
-    }
-    xmlhttp.open("GET", "getFriends.php?q=" + id.toString(), true);
-    xmlhttp.send();
-    
-}
-
-
 function deletePost(postid)
 {
 	
@@ -80,8 +63,6 @@ function addPost(userid)
         	$( "#content" ).prepend(newPost);
 			$.toaster({ priority : 'success', title : 'TP', message : "The Post has been added."});
 			CKEDITOR.instances['new_post'].setData(" ");
-			
-			alert(xmlhttp.responseText);
         }
     }
     xmlhttp.open("GET", "addPost.php?q=" + userid.toString() +"&r=" + CKEDITOR.instances['new_post'].getData(), true);
@@ -94,21 +75,21 @@ function addPost(userid)
 <body style="background-color:white">
 
 <!--Navbar-->
-<?php include 'navbar.php'; ?>
+<?php include 'sidebar_navbar/navbar.php'; ?>
 
 <!--BOOTSTRAP COLUMN LAYOUT-->
 <div class="row">
 		 <div class="col-lg-3" style="color:black">
 		 	<!--Sidebar-->
-		 	<?php include 'sidebar.php'; ?>		 	
+		 	<?php include 'sidebar_navbar/profile_sidebar.php'; ?>		 	
 		</div>
 
 		<div class="col-lg-9">
 				<h3 id="heading"> POSTS </h3>
 				<div style="margin-left:30px;margin-right:30px;">
 						<textarea id="new_post" name="new_post" placeholder="Enter text for the post"> </textarea> 
-						<br>
 						<button class="btn btn-md btn-primary" onclick="addPost(<?php echo $user->userId ?>)">Add Post</button>
+						<br>
 				</div>
 				<div id="content" style="margin-left:30px;margin-right:30px;">
 				

@@ -80,6 +80,27 @@ Class Post
 		mysqli_close($conn);
 		return $post_id;
 	}
+	
+	public static function addPostToFriend($poster_id,$text,$wall_id)
+	{
+		// Create connection
+		$conn = mysqli_connect(Database::$servername, Database::$username,Database::$password,Database::$db);
+		// Check connection
+		if (mysqli_connect_errno())
+  		{
+  			echo "Failed to connect to MySQL: " . mysqli_connect_error();
+  		}
+		// sql to delete a record
+		$sql = "INSERT INTO Post (poster_id,user_id,Text) VALUES ($poster_id,$wall_id,'$text');";
+		if (mysqli_query($conn, $sql)) {}
+		else 
+		{
+			echo "Error deleting record: " . $conn->error;
+		}
+		$post_id=mysqli_insert_id($conn);
+		mysqli_close($conn);
+		return $post_id;
+	}
 }
  
 

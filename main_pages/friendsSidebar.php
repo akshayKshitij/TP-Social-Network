@@ -10,7 +10,7 @@
 				<br>
 									 
 				<ul class="nav nav-pills nav-stacked">
-				<li ><a href="#">View POSTS</a></li>
+				<li class="active"><a href="#">View POSTS</a></li>
 				<li><a href="#" onclick=" window.location.assign('viewFriends.php')">View Friends</a></li>
 				<li><a href="#">View Friend Requests</a></li>
 				<li><a href="#">Post a new Question</a></li>

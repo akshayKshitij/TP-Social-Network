@@ -5,7 +5,14 @@ require '../models/friendClasses.php';
 require '../models/wallClasses.php';
 session_start();
 $user=User::getUser($_SESSION['user_id']);
-$wallUser=User::getUser($_POST['wall_id']);
+if (isset($_POST['wall_id']))
+{
+	$wallUser=User::getUser($_POST['wall_id']);
+}
+else
+{
+	$wallUser=User::getUser($_SESSION['wall_id']);
+}
 ?>
 
 <!DOCTYPE html>
@@ -44,8 +51,6 @@ function addPostToFriend(userid,wallid)
         	$( "#content" ).prepend(newPost);
 			$.toaster({ priority : 'success', title : 'TP', message : "The Post has been added."});
 			CKEDITOR.instances['new_post'].setData(" ");
-			
-			alert(xmlhttp.responseText);
         }
     }
     xmlhttp.open("GET", "addPostToFriend.php?q=" + userid.toString() +"&r=" + CKEDITOR.instances['new_post'].getData() +"&s=" + wallid, true);
@@ -68,10 +73,10 @@ function addPostToFriend(userid,wallid)
 		</div>
 
 		<div class="col-lg-9">
-				<h3 id="heading"> POSTS </h3>
+				<h3 id="heading"> <?php echo $wallUser->name ?>'s POSTS </h3>
 				<div style="margin-left:30px;margin-right:30px;">
 						<textarea id="new_post" name="new_post" placeholder="Enter text for the post"> </textarea> 
-						<button class="btn btn-md btn-primary" onclick="addPostToFriend(<?php echo $user->userId.','.$_POST['wall_id'] ?>)">Post to <?php echo $wallUser->name ?>'s Wall</button>
+						<button class="btn btn-md btn-primary" onclick="addPostToFriend(<?php echo $user->userId.','.$wallUser->userId ?>)">Post to <?php echo $wallUser->name ?>'s Wall</button>
 						<br>
 				</div>
 				<div id="content" style="margin-left:30px;margin-right:30px;">

@@ -88,6 +88,7 @@ class User
 		die("Connection failed: " . $conn->connect_error);
 	}
 	$conn = new mysqli(Database::$servername, Database::$username,Database::$password,Database::$db);
+	echo $id;
   	$sql = "SELECT user_id,username,name,email,password,age,country,gender,dob,work_college FROM User WHERE user_id=$id";
 	$result = $conn->query($sql);
 
@@ -169,7 +170,7 @@ class User
 	else 
 	{
 	    $friends=null;
-	    echo "NO POST FOUND";
+	    echo "NO FRIEND FOUND";
 	}
 	$conn->close();
 	return $friends;

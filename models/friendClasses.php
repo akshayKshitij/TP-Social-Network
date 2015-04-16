@@ -47,6 +47,40 @@ Class FriendRequests
 	public $senderId;
 	//The person who made the friend request.
  	public $receiverId;
+ 	
+ 	public function __construct($a1,$a2)
+  	{
+      	$this->senderId=$a1;
+      	$this->receiverId=$a2;
+  	}
+  	
+  	public function __destruct()
+  	{
+  	}
+  	
+  	public function delete()
+ 	{
+ 		// Create connection
+		$conn = new mysqli(Database::$servername, Database::$username,Database::$password,Database::$db);
+		// Check connection
+		if ($conn->connect_error) 
+		{
+			die("Connection failed: " . $conn->connect_error);
+		}
+		$conn = new mysqli(Database::$servername, Database::$username,Database::$password,Database::$db);
+		// sql to delete a record
+		$a1=$this->senderId;
+		$a2=$this->receiverId;
+		$sql = "DELETE FROM Friend_Requests WHERE sender_id=$a1 AND receiver_id=$a2";
+
+		if ($conn->query($sql) === TRUE) {}
+		else 
+		{
+			echo "Error deleting record: " . $conn->error;
+		}
+		$conn->close();
+		return null; 
+ 	}
 }
 
 Class Interest

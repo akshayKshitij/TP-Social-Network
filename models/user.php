@@ -175,4 +175,37 @@ class User
 	return $friends;
   }
   
+  public function getFriendRequests()
+  {
+  	// Create connection
+	$conn = new mysqli(Database::$servername, Database::$username,Database::$password,Database::$db);
+	// Check connection
+	if ($conn->connect_error) 
+	{
+		die("Connection failed: " . $conn->connect_error);
+	}
+	$conn = new mysqli(Database::$servername, Database::$username,Database::$password,Database::$db);
+	$id1=$this->userId;
+  	$sql = "SELECT sender_id FROM Friend_Requests WHERE receiver_id=$id1";
+	$result = $conn->query($sql);
+
+	if ($result->num_rows > 0) {
+		$friendRequesters=array();
+		while($row = $result->fetch_assoc()) 
+		{
+			$a=$row['sender_id'];
+			$sql2="SELECT user_id,name FROM User WHERE user_id=$a";
+			$result2=$conn->query($sql2);
+			array_push($friendRequesters,$result2->fetch_assoc());
+	    }
+	} 
+	else 
+	{
+	    $friendRequesters=null;
+	    echo "NO FRIEND  REQUESTS FOUND";
+	}
+	$conn->close();
+	return $friendRequesters;
+  }
+  
 }

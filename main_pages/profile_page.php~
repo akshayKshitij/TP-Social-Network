@@ -51,7 +51,7 @@ function addPost(userid)
         {
         	
         	post_id=parseInt(xmlhttp.responseText.split(",")[0]);
-        	
+        	alert(xmlhttp.responseText);
 			var newPost='<div id="postNo'+post_id+'">';
 			newPost+= '<h4><img src="uploads/'+userid+'.jpg" alt="Profile Photo" width="50" height="65" > &nbsp &nbsp';
 			newPost+= "Post by :"+ xmlhttp.responseText.split(",")[1];

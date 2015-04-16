@@ -87,7 +87,7 @@ function addPost(userid)
 
 		<div class="col-lg-9">
 				<h3 id="heading"> POSTS </h3>
-				<div style="margin-left:30px;margin-right:30px;">
+				<div style="margin-left:30px;margin-right:200px;">
 						<textarea id="new_post" name="new_post" placeholder="Enter text for the post"> </textarea> 
 						<button class="btn btn-md btn-primary" onclick="addPost(<?php echo $user->userId ?>)">Add Post</button>
 						<br>

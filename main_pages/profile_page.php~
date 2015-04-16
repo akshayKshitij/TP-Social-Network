@@ -37,7 +37,7 @@ function deletePost(postid)
 			$.toaster({ priority : 'success', title : 'TP', message : "The Post has been deleted."});
         }
     }
-    xmlhttp.open("GET", "deletePost.php?q=" + postid.toString(), true);
+    xmlhttp.open("GET", "../ajax/deletePost.php?q=" + postid.toString(), true);
     xmlhttp.send();
    
 }
@@ -63,11 +63,10 @@ function addPost(userid)
         	$( "#content" ).prepend(newPost);
 			$.toaster({ priority : 'success', title : 'TP', message : "The Post has been added."});
 			CKEDITOR.instances['new_post'].setData(" ");
-			
 			alert(xmlhttp.responseText);
         }
     }
-    xmlhttp.open("GET", "addPost.php?q=" + userid.toString() +"&r=" + CKEDITOR.instances['new_post'].getData(), true);
+    xmlhttp.open("GET", "../ajax/addPost.php?q=" + userid.toString() +"&r=" + CKEDITOR.instances['new_post'].getData(), true);
     xmlhttp.send();
    
 }

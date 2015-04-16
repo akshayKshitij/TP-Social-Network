@@ -23,7 +23,23 @@ $user=User::getUser($_SESSION['user_id']);
 
 <!--JAVASCRIPT-->
 <script>
-
+function unfriend(friendId,userId,friendName)
+{
+	var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function() 
+    {
+        if (xmlhttp.readyState == 4 && xmlhttp.status == 200) 
+        {
+			var parent = document.getElementById("content");
+			var child = document.getElementById("friendNo"+friendId);
+			parent.removeChild(child);
+			$.toaster({ priority : 'success', title : 'TP', message : friendName + "has been unfriended"});
+			alert(xmlhttp.responseText);
+        }
+    }
+    xmlhttp.open("GET", "../ajax/unfriend.php?q=" + userId.toString() + "&r=" +friendId.toString(), true);
+    xmlhttp.send();
+}
 </script>
 </head>
 
@@ -48,11 +64,12 @@ $user=User::getUser($_SESSION['user_id']);
 						for ($i=0;$i<$size;$i++)	
 						{
 							$temp=$friends[$size-$i-1];
-							//Enclose the Post in a div which has id as its post_id.
+							//Enclose the friend in a div which has id as its post_id.
 							echo '<div id="friendNo'.$temp['user_id'].'">';
 							echo '<h4><img src="uploads/'.$temp['user_id'].'.jpg" alt="Profile Photo" width="50" height="65" > &nbsp &nbsp';
-							echo $temp['name'];
-							echo '<form style="margin-top:5px" action="friendPage.php" method="POST"><button type="submit" class="btn btn-sm btn-primary ">View Profile</button><input type="hidden" name="wall_id" value="'.$temp['user_id'].'"></form></h4>';
+							echo $temp['name']."</h4>";
+							echo '<form style="margin-top:5px" action="friendPage.php" method="POST"><button type="submit" class="btn btn-sm btn-primary ">View Profile</button><input type="hidden" name="wall_id" value="'.$temp['user_id'].'"></form>';
+							echo '<button class="btn btn-sm btn-danger" onclick="unfriend('.$temp['user_id'].','.$user->userId.',\''.$temp['name'].'\')">Unfriend</button>';
 
 							echo "<br> <hr> <br>";
 							echo '</div>';

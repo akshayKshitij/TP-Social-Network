@@ -247,7 +247,7 @@ public function proximity($id,$search,&$row1,$conn,$store)
     $row=mysqli_fetch_assoc($result);
     $id=1;
     if($row['username']==$this->username){
-    	$mess="USERNAME IS ALREADY IN USE PLEASE GO BACK AND CHOOSE ANOTHER";
+    	$mess="USERNAME IS ALREADY IN USE PLEASE GO BACK AND CHOOSE ANOTHER <br><a href='register.html'>CLICK HERE TO TRY AGAIN</a><br>";
     }
     else{
 		$sql1="INSERT INTO User (name,username,email,password,age,country,gender,dob) VALUES ('".$this->name."', '".$this->username."','".$this->email."','".$hash."','".$this->age."','".$this->country."','".$this->gender."','".$this->date."')";

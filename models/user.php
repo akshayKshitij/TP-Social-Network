@@ -53,7 +53,187 @@ class User
 
     
   }
-  
+  public function search($id,$search)
+  {
+    $conn = new mysqli(Database::$servername, Database::$username,Database::$password,Database::$db);
+
+    if (!$conn) {
+        die("Connection failed: " . mysqli_connect_error());
+    }
+    $sql="SELECT * FROM User WHERE name='$search'";
+    $result=mysqli_query($conn,$sql);
+    $i=0;
+    while($row=mysqli_fetch_assoc($result))
+    {  
+            $id1=$row['user_id'];
+            $row1["$id1"][0]=0;
+            $row1["$id1"][1]=0;
+            $row1["$id1"][2]=0;
+            $store[$i]=$id1;
+            $i++;
+            //echo $id;
+    }
+    
+     $this->checkname($store,$id); 
+     echo "START NOW<br>";
+     $this->proximity($id,$search,$row1,$conn,$store);
+     $this->interaction($id,$search,$row1,$conn,0.6,0.4,$store);
+     foreach($row1 as $x ) 
+     {
+         echo $x[2] . "\n";
+         echo "<br>";
+     }
+
+
+  }
+  public function checkname($store,$id)
+  {
+    $temp=count($store);
+    for($x=0;$x<$temp;$x++)
+    {   
+
+        if($store[$x]==$id)
+            return $store[$x];
+    }
+    return -1;
+  }
+public function proximity($id,$search,&$row1,$conn,$store)
+  {
+ 
+    $sql="CREATE VIEW level1 AS SELECT id1 'i1',id2 'i2' FROM Friends WHERE id1='$id'";
+    mysqli_query($conn,$sql);
+    $sql2="SELECT * FROM level1";
+    $result=mysqli_query($conn,$sql2);
+    while($row=mysqli_fetch_assoc($result))
+    {       
+            $temp=$row["i2"];
+            $t1=$this->checkname($store,$temp);
+            if($t1!=-1)
+            {
+                $row1["$temp"][0]=1;
+                echo $temp;
+                echo "KSHIIJ<br>";
+            }
+                
+    }
+    $sql1="CREATE VIEW level2 AS SELECT Friends.id1,Friends.id2 FROM Friends INNER JOIN level1 ON Friends.id1=level1.i2";
+    mysqli_query($conn,$sql1);
+    $sql2="SELECT * FROM try";
+    $result=mysqli_query($conn,$sql2);
+    while($row=mysqli_fetch_assoc($result))
+    {       
+            $temp=$row["id2"];
+            $t1=$this->checkname($store,$temp);
+            if($t1!=-1 && $row1["$temp"][0]==0)
+            {   
+                $row1["$temp"][0]=1/2;
+                echo $temp;
+                echo "KSHIIJ 2<br>";
+            }   
+    }
+    $sql1="CREATE VIEW level3 AS SELECT Friends.id1,Friends.id2 FROM Friends INNER JOIN level2 ON Friends.id1=level2.id2";
+    mysqli_query($conn,$sql1);
+    $sql2="SELECT * FROM level3";
+    $result=mysqli_query($conn,$sql2);
+    while($row=mysqli_fetch_assoc($result))
+    {       
+            $temp=$row["id2"];
+            $t1=$this->checkname($store,$temp);
+            if($t1!=-1 && $row1["$temp"][0]==0)
+            {   
+                $row1["$temp"][0]=1/3;
+                echo $temp;
+                echo "KSHIIJ 3<br>";
+            }
+    }
+    $sql1="DROP VIEW level1";
+    $sql2="DROP VIEW level2";
+    $sql3="DROP VIEW level3";
+    mysqli_query($conn,$sql1);
+    mysqli_query($conn,$sql2);
+    mysqli_query($conn,$sql3);
+  }
+  public function interaction($id,$search,&$row1,$conn,$a,$b,$store)
+  {
+    $rowc=$row1;
+    $rowp=$row1;
+    $sql="Select poster_id,user_id FROM Post WHERE user_id='$id'";
+    $result=mysqli_query($conn,$sql);
+    while($row=mysqli_fetch_assoc($result))
+    {
+        $temp=$row["poster_id"];
+        $t1=$this->checkname($store,$temp);
+        if($t1!=-1)
+        {   
+                $rowp["$temp"][2]++;
+                echo $temp;
+                echo "TOMAE<br>";
+        }
+    }
+    
+    $sql="Select poster_id,user_id FROM Post WHERE poster_id='$id'";
+    $result=mysqli_query($conn,$sql);
+    while($row=mysqli_fetch_assoc($result))
+    {
+        $temp=$row["user_id"];
+        $t1=$this->checkname($store,$temp);
+        if($t1!=-1)
+        {   
+                $rowp["$temp"][2]++;
+                echo $temp;
+                echo "TOMAr 1<br>";
+        }
+    } 
+    
+    $sql="Select commentor_id,user_id FROM comment WHERE user_id='$id'";
+    $result=mysqli_query($conn,$sql);
+    while($row=mysqli_fetch_assoc($result))
+    {
+        $temp=$row["commentor_id"];
+        $t1=$this->checkname($store,$temp);
+        if($t1!=-1)
+        {   
+                $rowc["$temp"][2]++;
+                echo $temp;
+                echo "TOMAR 2<br>";
+        }
+    }
+    $sql="Select commentor_id,user_id FROM comment WHERE commentor_id='$id'";
+    $result=mysqli_query($conn,$sql);
+    while($row=mysqli_fetch_assoc($result))
+    {
+        $temp=$row["user_id"];
+        $t1=$this->checkname($store,$temp);
+        if($t1!=-1)
+        {   
+                $rowc["$temp"][2]++;
+                echo $temp;
+                echo "TOMAR 3<br>";
+        }
+    }
+    $size=count($store);
+    for($x=0;$x<$size;$x++)
+    {       
+        $index=$store[$x];
+        $temp=$rowp["$index"][2];
+        echo $temp;
+        if($temp!=0)
+            $temp=(float)(1-1/$temp);
+        else
+            $temp=0;
+        $temp1=$rowc["$index"][2];
+        
+        if($temp1!=0)
+            $temp1=(float)(1-1/$temp1);
+        else
+            $temp1=0;
+        $temp2=$a*$temp+$b*$temp1;
+        $row1["$index"][2]=$temp2;
+        echo $row1["$index"][2];
+        echo "answer<br>";
+    }
+    
+  }
   public function register()
   {
     $conn = new mysqli(Database::$servername, Database::$username,Database::$password,Database::$db);
@@ -176,3 +356,4 @@ class User
   }
   
 }
+

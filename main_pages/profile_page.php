@@ -37,7 +37,7 @@ function deletePost(postid)
 			$.toaster({ priority : 'success', title : 'TP', message : "The Post has been deleted."});
         }
     }
-    xmlhttp.open("GET", "deletePost.php?q=" + postid.toString(), true);
+    xmlhttp.open("GET", "../ajax/deletePost.php?q=" + postid.toString(), true);
     xmlhttp.send();
    
 }
@@ -51,7 +51,7 @@ function addPost(userid)
         {
         	
         	post_id=parseInt(xmlhttp.responseText.split(",")[0]);
-        	
+        	alert(xmlhttp.responseText);
 			var newPost='<div id="postNo'+post_id+'">';
 			newPost+= '<h4><img src="uploads/'+userid+'.jpg" alt="Profile Photo" width="50" height="65" > &nbsp &nbsp';
 			newPost+= "Post by :"+ xmlhttp.responseText.split(",")[1];
@@ -63,9 +63,10 @@ function addPost(userid)
         	$( "#content" ).prepend(newPost);
 			$.toaster({ priority : 'success', title : 'TP', message : "The Post has been added."});
 			CKEDITOR.instances['new_post'].setData(" ");
+			alert(xmlhttp.responseText);
         }
     }
-    xmlhttp.open("GET", "addPost.php?q=" + userid.toString() +"&r=" + CKEDITOR.instances['new_post'].getData(), true);
+    xmlhttp.open("GET", "../ajax/addPost.php?q=" + userid.toString() +"&r=" + CKEDITOR.instances['new_post'].getData(), true);
     xmlhttp.send();
    
 }
@@ -86,7 +87,7 @@ function addPost(userid)
 
 		<div class="col-lg-9">
 				<h3 id="heading"> POSTS </h3>
-				<div style="margin-left:30px;margin-right:30px;">
+				<div style="margin-left:30px;margin-right:200px;">
 						<textarea id="new_post" name="new_post" placeholder="Enter text for the post"> </textarea> 
 						<button class="btn btn-md btn-primary" onclick="addPost(<?php echo $user->userId ?>)">Add Post</button>
 						<br>

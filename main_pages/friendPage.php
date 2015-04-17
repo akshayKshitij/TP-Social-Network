@@ -53,7 +53,7 @@ function addPostToFriend(userid,wallid)
 			CKEDITOR.instances['new_post'].setData(" ");
         }
     }
-    xmlhttp.open("GET", "addPostToFriend.php?q=" + userid.toString() +"&r=" + CKEDITOR.instances['new_post'].getData() +"&s=" + wallid, true);
+    xmlhttp.open("GET", "../ajax/addPostToFriend.php?q=" + userid.toString() +"&r=" + CKEDITOR.instances['new_post'].getData() +"&s=" + wallid, true);
     xmlhttp.send();
    
 }

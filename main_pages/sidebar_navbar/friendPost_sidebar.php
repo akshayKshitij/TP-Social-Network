@@ -1,5 +1,27 @@
 <div style="margin-left:30px;">
-			 	<h3> <?php echo $wallUser->name ?> </h3>
+
+			 	<h3> 
+			 	<?php echo $wallUser->name;
+			 	echo '<span id="friendOrNot">';
+			 	if (Friends::areFriends($wallUser,$user))
+			 	{
+			 		echo '<button class="btn btn-sm btn-success pull-right">Friend</button>';
+			 	}
+			 	else if (FriendRequests::sentRequest($wallUser,$user))
+			 	{
+			 		echo '<button class="btn btn-sm btn-info pull-right">Has sent you a request</button>';
+			 	}
+			 	else if (FriendRequests::sentRequest($user,$wallUser))
+			 	{
+			 		echo '<button class="btn btn-sm btn-info pull-right">You have sent a request</button>';
+			 	}
+			 	else
+			 	{
+			 		echo '<button class="btn btn-sm btn-warning pull-right" onclick="sendRequest('.$user->userId.','.$wallUser->userId.',\''.$wallUser->name.'\');">Send Friend Request</button>';
+			 	}
+				 ?> 
+				 </span></h3>
+				 
 			 	<img src="uploads/<?php echo $wallUser->userId.'.jpg' ?>" alt="Profile Photo" width="200" height="280" >
 				<br><br>
 				<?php 

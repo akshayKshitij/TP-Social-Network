@@ -25,8 +25,6 @@ $user=User::getUser($_SESSION['user_id']);
 <script>
 function addFriend(requesterId,userId,requesterName)
 {
-	alert(requesterName)
-	/*
 	var xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function() 
     {
@@ -36,17 +34,15 @@ function addFriend(requesterId,userId,requesterName)
 			var child = document.getElementById("friendRequesterNo"+requesterId);
 			parent.removeChild(child);
 			$.toaster({ priority : 'success', title : 'TP', message : requesterName + "'s friend request has been accepted"});
-			alert(xmlhttp.responseText);
         }
     }
-    xmlhttp.open("GET", "../ajax/addFriend.php?q=" + userId.toString() + "&r=" +friendId.toString(), true);
+    xmlhttp.open("GET", "../ajax/addFriend.php?receiverId=" + userId.toString() + "&senderId=" +requesterId.toString(), true);
     xmlhttp.send();
-    */
+
 }
 
 function deleteRequest(requesterId,userId,requesterName)
 {
-	alert(requesterName)
 	var xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function() 
     {
@@ -55,8 +51,7 @@ function deleteRequest(requesterId,userId,requesterName)
 			var parent = document.getElementById("content");
 			var child = document.getElementById("friendRequesterNo"+requesterId);
 			parent.removeChild(child);
-			$.toaster({ priority : 'success', title : 'TP', message : requesterName + "'s friend request has been rejected"});
-			alert(xmlhttp.responseText);
+			$.toaster({ priority : 'info', title : 'TP', message : requesterName + "'s friend request has been rejected"});
         }
     }
     xmlhttp.open("GET", "../ajax/deleteRequest.php?receiverId=" + userId.toString() + "&senderId=" +requesterId.toString(), true);
@@ -98,7 +93,7 @@ function deleteRequest(requesterId,userId,requesterName)
 							echo '<form style="margin-top:5px" action="friendPage.php" method="POST"><button type="submit" class="btn btn-sm btn-primary ">View Profile</button><input type="hidden" name="wall_id" value="'.$temp['user_id'].'"></form>';
 							
 
-							echo "<br> <hr> <br>";
+							echo '<br> <hr> <br>';
 							echo '</div>';
 						}
 					?>

@@ -521,10 +521,51 @@ class User
 	else 
 	{
 	    $friendRequesters=null;
-	    echo "NO FRIEND  REQUESTS FOUND";
+	    echo "No Friend Requests Found.";
 	}
 	$conn->close();
 	return $friendRequesters;
+  }
+  
+  
+  
+  public function getPostNotifications()
+  {
+  	// Create connection
+	$conn = new mysqli(Database::$servername, Database::$username,Database::$password,Database::$db);
+	// Check connection
+	if ($conn->connect_error) 
+	{
+		die("Connection failed: " . $conn->connect_error);
+	}
+	$conn = new mysqli(Database::$servername, Database::$username,Database::$password,Database::$db);
+	$id=$this->userId;
+  	$sql = "SELECT posted_by_id FROM Post_Notifications WHERE posted_to_id=$id";
+	$result = $conn->query($sql);
+
+	if ($result->num_rows > 0) {
+		$posts=array();
+		while($row = $result->fetch_assoc()) 
+		{
+			array_push($posts,$row);
+	    }
+	} 
+	else 
+	{
+	    $posts=null;
+	    echo "No Post Notification";
+	}
+	
+	//Now that the notification has been seen - delete it
+	$sql = "DELETE FROM Post_Notifications WHERE posted_to_id=$id";
+	if ($conn->query($sql) === TRUE) {}
+	else 
+	{
+		echo "Error deleting record: " . $conn->error;
+	}
+		
+	$conn->close();
+	return $posts;
   }
   
 }

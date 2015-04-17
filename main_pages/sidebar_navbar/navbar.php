@@ -1,5 +1,35 @@
+<!--To ensure that the person is logged in-->
+<?php
+if (!isset($_SESSION['user_id']))
+{
+	header("Location: ../main_pages/login.html");
+	die();
+}
+?>
+
+<script>
+function getNotifications(userId)
+{
+	var myNode = document.getElementById("notifications");
+	while (myNode.firstChild) 
+	{
+    	myNode.removeChild(myNode.firstChild);
+	}
+	var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function() 
+    {
+        if (xmlhttp.readyState == 4 && xmlhttp.status == 200) 
+        {
+			$("#notifications").prepend(xmlhttp.responseText);
+        }
+    }
+    xmlhttp.open("GET", "../ajax/getNotifications.php?userId=" + userId.toString(), true);
+    xmlhttp.send();
+}
+</script>
+
 <!--NAVBAR-->
-<nav class="navbar navbar-default">
+<nav class="navbar navbar-inverse">
   <div class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
@@ -9,24 +39,18 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="#">TP</a>
+      <a class="navbar-brand" href="#">TP-Social-Network</a>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-        <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
-        <li><a href="#">Link</a></li>
+        <li class="active"><a href="../main_pages/profile_page.php">Profile Page<span class="sr-only">(current)</span></a></li>
+        <li><a href="#">Make a new Friend</a></li>
         <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Dropdown <span class="caret"></span></a>
-          <ul class="dropdown-menu" role="menu">
-            <li><a href="#">Action</a></li>
-            <li><a href="#">Another action</a></li>
-            <li><a href="#">Something else here</a></li>
-            <li class="divider"></li>
-            <li><a href="#">Separated link</a></li>
-            <li class="divider"></li>
-            <li><a href="#">One more separated link</a></li>
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" onclick="getNotifications(<?php echo $_SESSION['user_id']; ?>)">Notifications <span class="caret"></span> &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp&nbsp &nbsp &nbsp &nbsp</a>
+          <ul class="dropdown-menu" role="menu" id="notifications">
+      
           </ul>
         </li>
       </ul>
@@ -37,11 +61,11 @@
         <button type="submit" class="btn btn-default">Submit</button>
       </form>
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="#">Link</a></li>
+        <li><a href="#" onclick=" window.location.assign('logout.php')">Logout</a></li>
         <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Dropdown <span class="caret"></span></a>
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Settings<span class="caret"></span></a>
           <ul class="dropdown-menu" role="menu">
-            <li><a href="#">Action</a></li>
+     		<li><a href="#">Action</a></li>
             <li><a href="#">Another action</a></li>
             <li><a href="#">Something else here</a></li>
             <li class="divider"></li>

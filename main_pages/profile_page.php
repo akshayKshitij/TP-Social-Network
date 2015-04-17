@@ -34,7 +34,7 @@ function deletePost(postid)
 			var parent = document.getElementById("content");
 			var child = document.getElementById("postNo"+postid);
 			parent.removeChild(child);
-			$.toaster({ priority : 'success', title : 'TP', message : "The Post has been deleted."});
+			$.toaster({ priority : 'info', title : 'TP', message : "The Post has been deleted."});
         }
     }
     xmlhttp.open("GET", "../ajax/deletePost.php?q=" + postid.toString(), true);
@@ -61,7 +61,7 @@ function addPost(userid)
 			newPost+= '</div>';
 	
         	$( "#content" ).prepend(newPost);
-			$.toaster({ priority : 'success', title : 'TP', message : "The Post has been added."});
+			$.toaster({ priority : 'info', title : 'TP', message : "The Post has been added."});
 			CKEDITOR.instances['new_post'].setData(" ");
 			alert(xmlhttp.responseText);
         }

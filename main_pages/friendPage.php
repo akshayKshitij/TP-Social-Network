@@ -49,13 +49,29 @@ function addPostToFriend(userid,wallid)
 			newPost+= '</div>';
 	
         	$( "#content" ).prepend(newPost);
-			$.toaster({ priority : 'success', title : 'TP', message : "The Post has been added."});
+			$.toaster({ priority : 'info', title : 'TP', message : "The Post has been added."});
 			CKEDITOR.instances['new_post'].setData(" ");
         }
     }
     xmlhttp.open("GET", "../ajax/addPostToFriend.php?q=" + userid.toString() +"&r=" + CKEDITOR.instances['new_post'].getData() +"&s=" + wallid, true);
     xmlhttp.send();
    
+}
+//will be called from a line in the navbar
+function sendRequest(senderId,receiverId,receiverName)
+{
+	var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function() 
+    {
+        if (xmlhttp.readyState == 4 && xmlhttp.status == 200) 
+        {
+			document.getElementById('friendOrNot').innerHTML ='<button class="btn btn-sm btn-info pull-right">You have sent a request</button>';
+			$.toaster({ priority : 'info', title : 'TP', message : receiverName + " has receiver your friend request"});
+        }
+    }
+    xmlhttp.open("GET", "../ajax/sendRequest.php?receiverId=" + receiverId.toString() + "&senderId=" +senderId.toString(), true);
+    xmlhttp.send();
+
 }
 </script>
 </head>

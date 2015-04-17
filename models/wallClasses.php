@@ -98,6 +98,14 @@ Class Post
 			echo "Error deleting record: " . $conn->error;
 		}
 		$post_id=mysqli_insert_id($conn);
+		//Adding the notification
+		$sql = "INSERT INTO Post_Notifications (posted_to_id,posted_by_id) VALUES ($wall_id,$poster_id);";
+		if (mysqli_query($conn, $sql)) {}
+		else 
+		{
+			echo "Error deleting record: " . $conn->error;
+		}
+		
 		mysqli_close($conn);
 		return $post_id;
 	}

@@ -33,7 +33,7 @@ function unfriend(friendId,userId,friendName)
 			var parent = document.getElementById("content");
 			var child = document.getElementById("friendNo"+friendId);
 			parent.removeChild(child);
-			$.toaster({ priority : 'success', title : 'TP', message : friendName + "has been unfriended"});
+			$.toaster({ priority : 'info', title : 'TP', message : friendName + " has been unfriended"});
 			//alert(xmlhttp.responseText);
         }
     }

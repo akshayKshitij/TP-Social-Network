@@ -22,6 +22,8 @@
         $new->gender=0;
     else
         $new->gender=1;
+    $new->workCollege=$_POST['work'];
+    
     $new->register();
 ?>
 

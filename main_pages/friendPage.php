@@ -88,7 +88,7 @@ function sendRequest(senderId,receiverId,receiverName)
 		 	<?php include 'sidebar_navbar/friendPost_sidebar.php'; ?>		 	
 		</div>
 
-		<div class="col-lg-9">
+		<div class="col-lg-6">
 				<h3 id="heading"> <?php echo $wallUser->name ?>'s POSTS </h3>
 				<div style="margin-left:30px;margin-right:30px;">
 						<textarea id="new_post" name="new_post" placeholder="Enter text for the post"> </textarea> 
@@ -125,6 +125,11 @@ function sendRequest(senderId,receiverId,receiverName)
 					?>
 				</div>
 				
+		</div>
+		
+		<div class="col-lg-3" >
+		 	<!--Sidebar-->
+		 	<?php include 'sidebar_navbar/friend_rightbar.php'; ?>		 	
 		</div>
 
 </div>

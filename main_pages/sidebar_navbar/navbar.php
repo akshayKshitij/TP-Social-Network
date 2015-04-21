@@ -46,17 +46,17 @@ function getNotifications(userId)
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
         <li class="active"><a href="../main_pages/profile_page.php">Profile Page<span class="sr-only">(current)</span></a></li>
-        <li><a href="#">Make a new Friend</a></li>
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" onclick="getNotifications(<?php echo $_SESSION['user_id']; ?>)">Notifications <span class="caret"></span> &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp&nbsp &nbsp &nbsp &nbsp</a>
+        <li><a href="../main_pages/make_new_friends.php">Make new Friends</a></li>
+        <li class="dropdown" style="width:200px">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" onclick="getNotifications(<?php echo $_SESSION['user_id']; ?>)">Notifications <span class="caret"></span></a>
           <ul class="dropdown-menu" role="menu" id="notifications">
       
           </ul>
         </li>
       </ul>
-      <form class="navbar-form navbar-left" role="search">
+      <form class="navbar-form navbar-left" role="search" method="post" action="search_people.php">
         <div class="form-group">
-          <input type="text" class="form-control" placeholder="Search">
+          <input name="search_query" type="text" class="form-control" placeholder="Search People">
         </div>
         <button type="submit" class="btn btn-default">Submit</button>
       </form>

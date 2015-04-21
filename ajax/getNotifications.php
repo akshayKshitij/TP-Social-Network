@@ -4,7 +4,7 @@ require '../models/user.php';
 $userId = intval($_GET['userId']);
 $user=User::getUser($userId);
 
-echo "POST NOTIFICATIONS <br><hr>";
+echo "POST NOTIFICATIONS &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp  &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp <br><hr>";
 $newPosts=$user->getPostNotifications();
 $size=count($newPosts);
 for ($i=0;$i<$size;$i++)	

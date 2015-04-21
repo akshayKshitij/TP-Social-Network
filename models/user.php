@@ -429,5 +429,36 @@ public function proximity($id,$search,&$row1,$conn,$store)
 	return $posts;
   }
   
+  
+  public function getInterests()
+  {
+  	// Create connection
+	$conn = new mysqli(Database::$servername, Database::$username,Database::$password,Database::$db);
+	// Check connection
+	if ($conn->connect_error) 
+	{
+		die("Connection failed: " . $conn->connect_error);
+	}
+	$conn = new mysqli(Database::$servername, Database::$username,Database::$password,Database::$db);
+	$id=$this->userId;
+  	$sql = "SELECT interest_text FROM Interest WHERE user_id=$id";
+	$result = $conn->query($sql);
+
+	if ($result->num_rows > 0) {
+		$interests=array();
+		while($row = $result->fetch_assoc()) 
+		{
+			array_push($interests,$row);
+	    }
+	} 
+	else 
+	{
+	    $interests=null;
+	    echo "No interests found";
+	}
+	$conn->close();
+	return $interests;
+  }
+  
 }
 

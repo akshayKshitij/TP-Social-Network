@@ -34,7 +34,7 @@ function deletePost(postid)
 			var parent = document.getElementById("content");
 			var child = document.getElementById("postNo"+postid);
 			parent.removeChild(child);
-			$.toaster({ priority : 'success', title : 'TP', message : "The Post has been deleted."});
+			$.toaster({ priority : 'info', title : 'TP', message : "The Post has been deleted."});
         }
     }
     xmlhttp.open("GET", "../ajax/deletePost.php?q=" + postid.toString(), true);
@@ -61,7 +61,7 @@ function addPost(userid)
 			newPost+= '</div>';
 	
         	$( "#content" ).prepend(newPost);
-			$.toaster({ priority : 'success', title : 'TP', message : "The Post has been added."});
+			$.toaster({ priority : 'info', title : 'TP', message : "The Post has been added."});
 			CKEDITOR.instances['new_post'].setData(" ");
 			alert(xmlhttp.responseText);
         }
@@ -79,17 +79,17 @@ function addPost(userid)
 <?php include 'sidebar_navbar/navbar.php'; ?>
 
 <!--BOOTSTRAP COLUMN LAYOUT-->
-<div class="row">
-		 <div class="col-lg-3" style="color:black">
+<div class="row" >
+		 <div class="col-lg-3" style="color:black;background-color:#F2F2EB;">
 		 	<!--Sidebar-->
 		 	<?php include 'sidebar_navbar/profile_sidebar.php'; ?>		 	
 		</div>
 
-		<div class="col-lg-9">
+		<div class="col-lg-6" style="background-color:#F2F2F2;height:700px">
 				<h3 id="heading"> POSTS </h3>
-				<div style="margin-left:30px;margin-right:200px;">
+				<div style="margin-left:30px;margin-right:30px;">
 						<textarea id="new_post" name="new_post" placeholder="Enter text for the post"> </textarea> 
-						<button class="btn btn-md btn-primary" onclick="addPost(<?php echo $user->userId ?>)">Add Post</button>
+						<button class="btn btn-md btn-primary" style="margin-top:5px;" onclick="addPost(<?php echo $user->userId ?>)">Add Post</button>
 						<br>
 				</div>
 				<div id="content" style="margin-left:30px;margin-right:30px;">
@@ -125,7 +125,11 @@ function addPost(userid)
 				</div>
 				
 		</div>
-
+		
+		<div class="col-lg-3" style="background-color:#F2F2EB;height:700px">
+		<!--Rightbar-->
+		<?php include 'sidebar_navbar/profile_rightbar.php'; ?>
+		</div>
 </div>
 
 <script>

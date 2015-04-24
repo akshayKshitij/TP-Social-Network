@@ -35,12 +35,12 @@ $wallUser=User::getUser($_SESSION['wall_id']);
 
 <!--BOOTSTRAP COLUMN LAYOUT-->
 <div class="row">
-		 <div class="col-lg-3" style="color:black">
+		 <div class="col-lg-3" style="color:black;background-color:#F2F2EB;">
 		 	<!--Sidebar-->
 		 	<?php include 'sidebar_navbar/friendViewFriends_sidebar .php'; ?> 	
 		</div>
 
-		<div class="col-lg-9">
+		<div class="col-lg-6" style="background-color:#FBFBFB;height:700px">
 				<h3 id="heading"> <?php echo $wallUser->name ?>'s FRIENDS </h3>
 				<div id="content" style="margin-left:30px;margin-right:30px;">
 					<?php
@@ -69,6 +69,10 @@ $wallUser=User::getUser($_SESSION['wall_id']);
 				
 		</div>
 
+		<div class="col-lg-3" style="background-color:#F2F2EB;height:700px">
+		 	<!--Sidebar-->
+		 	<?php include 'sidebar_navbar/friend_rightbar.php'; ?>		 	
+		</div>
 </div>
 
 <script>

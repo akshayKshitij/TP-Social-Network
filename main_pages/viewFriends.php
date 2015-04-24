@@ -50,12 +50,12 @@ function unfriend(friendId,userId,friendName)
 
 <!--BOOTSTRAP COLUMN LAYOUT-->
 <div class="row">
-		 <div class="col-lg-3" style="color:black">
+		 <div class="col-lg-3" style="color:black;background-color:#F2F2EB;">
 		 	<!--Sidebar-->
 		 	<?php include 'sidebar_navbar/viewFriends_sidebar.php'; ?> 	
 		</div>
 
-		<div class="col-lg-9">
+		<div class="col-lg-6" style="background-color:#FBFBFB;height:700px">
 				<h3 id="heading"> FRIENDS </h3>
 				<div id="content" style="margin-left:30px;margin-right:30px;">
 					<?php
@@ -78,7 +78,11 @@ function unfriend(friendId,userId,friendName)
 				</div>
 				
 		</div>
-
+		
+		<div class="col-lg-3" style="background-color:#F2F2EB;height:700px">
+		<!--Rightbar-->
+		<?php include 'sidebar_navbar/profile_rightbar.php'; ?>
+		</div>
 </div>
 
 <script>

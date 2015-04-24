@@ -62,7 +62,7 @@ function addPost(userid)
         	$( "#content" ).prepend(newPost);
 			$.toaster({ priority : 'info', title : 'TP', message : "The Post has been added."});
 			CKEDITOR.instances['new_post'].setData(" ");
-			alert(xmlhttp.responseText);
+			//alert(xmlhttp.responseText);
         }
     }
     xmlhttp.open("GET", "../ajax/addPost.php?q=" + userid.toString() +"&r=" + CKEDITOR.instances['new_post'].getData(), true);

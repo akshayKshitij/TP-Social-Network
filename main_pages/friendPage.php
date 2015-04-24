@@ -105,12 +105,12 @@ function addComment(postId,commentorId,userId)
 
 <!--BOOTSTRAP COLUMN LAYOUT-->
 <div class="row">
-		 <div class="col-lg-3" style="color:black">
+		<div class="col-lg-3" style="color:black;background-color:#F2F2EB;">
 		 	<!--Sidebar-->
 		 	<?php include 'sidebar_navbar/friendPost_sidebar.php'; ?>		 	
 		</div>
 
-		<div class="col-lg-6">
+		<div class="col-lg-6" style="background-color:#FBFBFB;height:700px">
 				<h3 id="heading"> <?php echo $wallUser->name ?>'s POSTS </h3>
 				<div style="margin-left:30px;margin-right:30px;">
 						<textarea id="new_post" name="new_post" placeholder="Enter text for the post"> </textarea> 
@@ -153,7 +153,7 @@ function addComment(postId,commentorId,userId)
 				
 		</div>
 		
-		<div class="col-lg-3" >
+		<div class="col-lg-3" style="background-color:#F2F2EB;height:700px">
 		 	<!--Sidebar-->
 		 	<?php include 'sidebar_navbar/friend_rightbar.php'; ?>		 	
 		</div>

@@ -68,12 +68,12 @@ function deleteRequest(requesterId,userId,requesterName)
 
 <!--BOOTSTRAP COLUMN LAYOUT-->
 <div class="row">
-		 <div class="col-lg-3" style="color:black">
+		 <div class="col-lg-3" style="color:black;background-color:#F2F2EB;">
 		 	<!--Sidebar-->
 		 	<?php include 'sidebar_navbar/viewFriendRequests_sidebar.php'; ?> 	
 		</div>
 
-		<div class="col-lg-9">
+		<div class="col-lg-6" style="background-color:#FBFBFB;height:700px">
 				<h3 id="heading"> FRIEND REQUEST </h3>
 				<div id="content" style="margin-left:30px;margin-right:200px;">
 					<?php
@@ -101,6 +101,10 @@ function deleteRequest(requesterId,userId,requesterName)
 				
 		</div>
 
+		<div class="col-lg-3" style="background-color:#F2F2EB;height:700px">
+		<!--Rightbar-->
+		<?php include 'sidebar_navbar/profile_rightbar.php'; ?>
+		</div>
 </div>
 
 <script>

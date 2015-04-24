@@ -38,28 +38,28 @@ else
 
 <!--BOOTSTRAP COLUMN LAYOUT-->
 <div class="row">
-		 <div class="col-lg-3" style="color:black">
+		 <div class="col-lg-3" style="color:black;background-color:#F2F2EB;">
 		 	<!--Sidebar-->
 		 	<?php include 'sidebar_navbar/sidebar.php'; ?> 	
 		</div>
 
-		<div class="col-lg-9">
-				<h3 id="heading"> MAKE A NEW FRIEND </h3>
+		<div class="col-lg-6" style="background-color:#FBFBFB;height:700px">
+				<h3 id="heading"> SEARCH RESULT </h3>
 				<div id="content" style="margin-left:30px;margin-right:200px;">
 					<?php
 					//edit this to include Kshitij's function
-						$personSearch=$user->getFriendRequests();
+						$personSearch=$user->search($user->userId,$searchQuery,Settings::$proximitiyCoeff,Settings::$interactionCoeff,Settings::$similarityCoeff);
 						$size=count($personSearch);
-						for ($i=0;$i<$size;$i++)	
+						foreach($personSearch as $person => $x) 
 						{
-							$temp=User::getUser($friendRecommendations[$size-$i-1]['user_id']);
+							$temp=User::getUser($person);
 							//Enclose the friend in a div which has id as its post_id.
 							echo '<div>';
-							echo '<h4><img src="uploads/'.$temp['user_id'].'.jpg" alt="Profile Photo" width="50" height="65" > &nbsp &nbsp';
-							echo $temp['name'];
-							echo "(Age ".$temp['age'].",".$temp['workCollege'].",".$temp['country'].")</h4>";
+							echo '<h4><img src="uploads/'.$temp->userId.'.jpg" alt="Profile Photo" width="50" height="65" > &nbsp &nbsp';
+							echo $temp->name;
+							echo "(Age ".$temp->age.",".$temp->workCollege.",".$temp->country.")</h4>";
 							
-							echo '<form style="margin-top:5px" action="friendPage.php" method="POST"><button type="submit" class="btn btn-sm btn-primary ">View Profile</button><input type="hidden" name="wall_id" value="'.$temp['user_id'].'"></form>';
+							echo '<form style="margin-top:5px" action="friendPage.php" method="POST"><button type="submit" class="btn btn-sm btn-primary ">View Profile</button><input type="hidden" name="wall_id" value="'.$temp->userId.'"></form>';
 							echo '<br> <hr> <br>';
 							echo '</div>';
 						}
@@ -68,6 +68,10 @@ else
 				
 		</div>
 
+		<div class="col-lg-3" style="background-color:#F2F2EB;height:700px">
+		<!--Rightbar-->
+		<?php include 'sidebar_navbar/profile_rightbar.php'; ?>
+		</div>
 </div>
 
 <script>

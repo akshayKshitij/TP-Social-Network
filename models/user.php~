@@ -116,7 +116,7 @@ class User
     if (!$conn) {
         die("Connection failed: " . mysqli_connect_error());
     }
-    $sql="SELECT * FROM User WHERE name='$search'";
+    $sql="SELECT * FROM User WHERE name LIKE '%$search%'";
     $result=mysqli_query($conn,$sql);
     $i=0;
     while($row=mysqli_fetch_assoc($result))
@@ -148,8 +148,10 @@ class User
      arsort($FINAL);
      foreach($FINAL as $x => $x_value) 
      {
+     	/*
        echo "Key=" . $x . ", Value=" . $x_value;
        echo "<br>";
+       */
      } 
      return $FINAL;
 
@@ -187,28 +189,35 @@ class User
     mysqli_query($conn,$sql1);
     $sql2="SELECT * FROM try";
     $result=mysqli_query($conn,$sql2);
-    while($row=mysqli_fetch_assoc($result))
-    {       
-            $temp=$row["id2"];
-            $t1=$this->checkname($store,$temp);
-            if($t1!=-1 && $row1["$temp"][0]==0)
-            {   
-                $row1["$temp"][0]=1/2;
-            }   
+    if ($result!=null) 
+    {
+		while($row=mysqli_fetch_assoc($result))
+		{       
+		        $temp=$row["id2"];
+		        $t1=$this->checkname($store,$temp);
+		        if($t1!=-1 && $row1["$temp"][0]==0)
+		        {   
+		            $row1["$temp"][0]=1/2;
+		        }   
+		}
     }
     $sql1="CREATE VIEW level3 AS SELECT Friends.id1,Friends.id2 FROM Friends INNER JOIN level2 ON Friends.id1=level2.id2";
     mysqli_query($conn,$sql1);
     $sql2="SELECT * FROM level3";
     $result=mysqli_query($conn,$sql2);
-    while($row=mysqli_fetch_assoc($result))
-    {       
-            $temp=$row["id2"];
-            $t1=$this->checkname($store,$temp);
-            if($t1!=-1 && $row1["$temp"][0]==0)
-            {   
-                $row1["$temp"][0]=1/3;
-            }
+    if ($result!=null) 
+    {
+		while($row=mysqli_fetch_assoc($result))
+		{       
+		        $temp=$row["id2"];
+		        $t1=$this->checkname($store,$temp);
+		        if($t1!=-1 && $row1["$temp"][0]==0)
+		        {   
+		            $row1["$temp"][0]=1/3;
+		        }
+		}
     }
+
     $sql1="DROP VIEW level1";
     $sql2="DROP VIEW level2";
     $sql3="DROP VIEW level3";
@@ -601,5 +610,22 @@ class User
 	return $interests;
   }
   
+  public static function addInterest($userId,$interest_text)
+  {
+  		// Create connection
+		$conn = mysqli_connect(Database::$servername, Database::$username,Database::$password,Database::$db);
+		// Check connection
+		if (mysqli_connect_errno())
+  		{
+  			echo "Failed to connect to MySQL: " . mysqli_connect_error();
+  		}
+		// sql to delete a record
+		$sql = "INSERT INTO Interest (user_id,interest_text) VALUES ($userId,'$interest_text');";
+		if (mysqli_query($conn, $sql)) {}
+		else 
+		{
+			echo "Error deleting record: " . $conn->error;
+		}
+		mysqli_close($conn);
 }
 

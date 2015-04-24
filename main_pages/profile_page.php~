@@ -134,7 +134,7 @@ function addComment(postId,commentorId,userId)
 							//echo '<div style="background-color:#A6B8ED">';
 							$comments=Post::getComments($temp['post_id']);
 							$size2=count($comments);
-							echo '<div id="comments'.$temp['post_id'].'" style="background-color:#CAD4F4;padding:10px 10px 10px 10px;">';
+							echo '<div id="comments'.$temp['post_id'].'" style="background-color:#F0F6FF;padding:10px 10px 10px 10px;">';
 							for ($j=0;$j<$size2;$j++)
 							{
 								$temp2=$comments[$j];

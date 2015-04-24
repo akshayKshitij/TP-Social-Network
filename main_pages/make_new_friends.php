@@ -39,18 +39,19 @@ $user=User::getUser($_SESSION['user_id']);
 				<div id="content" style="margin-left:30px;margin-right:200px;">
 					<?php
 					//edit this to include Kshitij's function
-						$friendRecommendations=$user->getFriendRequests();
+						$friendRecommendations=$user->suggestions($user->userId);
 						$size=count($friendRecommendations);
-						for ($i=0;$i<$size;$i++)	
+						
+						foreach($friendRecommendations as $recomendation => $x) 
 						{
-							$temp=User::getUser($friendRecommendations[$size-$i-1]['user_id']);
+							$temp=User::getUser($recomendation);
 							//Enclose the friend in a div which has id as its post_id.
 							echo '<div>';
-							echo '<h4><img src="uploads/'.$temp['user_id'].'.jpg" alt="Profile Photo" width="50" height="65" > &nbsp &nbsp';
-							echo $temp['name'];
-							echo "(Age ".$temp['age'].",".$temp['workCollege'].",".$temp['country'].")</h4>";
+							echo '<h4><img src="uploads/'.$temp->userId.'.jpg" alt="Profile Photo" width="50" height="65" > &nbsp &nbsp';
+							echo $temp->name;
+							echo "(Age ".$temp->age.",".$temp->workCollege.",".$temp->country.")</h4>";
 							
-							echo '<form style="margin-top:5px" action="friendPage.php" method="POST"><button type="submit" class="btn btn-sm btn-primary ">View Profile</button><input type="hidden" name="wall_id" value="'.$temp['user_id'].'"></form>';
+							echo '<form style="margin-top:5px" action="friendPage.php" method="POST"><button type="submit" class="btn btn-sm btn-primary ">View Profile</button><input type="hidden" name="wall_id" value="'.$temp->userId.'"></form>';
 							echo '<br> <hr> <br>';
 							echo '</div>';
 						}

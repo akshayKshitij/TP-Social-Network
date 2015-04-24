@@ -32,7 +32,7 @@ Class Post
 			else 
 			{
 				$comments=null;
-				echo "No Comments Found";
+				//echo "No Comments Found";
 			}
 			$conn->close();
 			return $comments;
@@ -122,6 +122,26 @@ Class Comment
  	//The post to which this comment corresponds to.
  	public $postId;
  	public $text;
+ 	
+ 	public static function addComment($postId,$commentorId,$userId,$commentText)
+	{
+		// Create connection
+		$conn = mysqli_connect(Database::$servername, Database::$username,Database::$password,Database::$db);
+		// Check connection
+		if (mysqli_connect_errno())
+  		{
+  			echo "Failed to connect to MySQL: " . mysqli_connect_error();
+  		}
+		// sql to delete a record
+		$sql = "INSERT INTO comment (post_id,commentor_id,user_id,text) VALUES ($postId,$commentorId,$userId,'$commentText');";
+		if (mysqli_query($conn, $sql)) {}
+		else 
+		{
+			echo "Error deleting record: " . $conn->error;
+		}
+		mysqli_close($conn);
+
+	}
 }
 
 ?>

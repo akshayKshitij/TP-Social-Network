@@ -73,6 +73,28 @@ function sendRequest(senderId,receiverId,receiverName)
     xmlhttp.send();
 
 }
+
+function addComment(postId,commentorId,userId)
+{
+	
+	var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function() 
+    {
+        if (xmlhttp.readyState == 4 && xmlhttp.status == 200) 
+        {
+        	var newComment="";
+			newComment+= "<h6>Comment by :"+ xmlhttp.responseText + "</h6>";
+			newComment+= document.getElementById("newCommentpostNo"+postId).value + "<br>";
+								
+        	$("#comments"+postId).append(newComment);
+			$.toaster({ priority : 'info', title : 'TP', message : "The Comment has been added."});
+			document.getElementById("newCommentpostNo"+postId).value=" ";
+        }
+    }
+    xmlhttp.open("GET", "../ajax/addComment.php?postId=" + postId.toString() + "&commentorId=" + commentorId.toString() + "&userId=" + userId.toString() + "&commentText=" + document.getElementById("newCommentpostNo"+postId).value, true);
+    xmlhttp.send();
+   
+}
 </script>
 </head>
 
@@ -110,16 +132,20 @@ function sendRequest(senderId,receiverId,receiverName)
 							echo '<h4><img src="uploads/'.$temp["poster_id"].'.jpg" alt="Profile Photo" width="50" height="65" > &nbsp &nbsp';
 							echo "Post by :". User::getUser($temp['poster_id'])->name;
 							echo $temp['Text'];
-							
+
 							$comments=Post::getComments($temp['post_id']);
 							$size2=count($comments);
+							echo '<div id="comments'.$temp['post_id'].'" style="background-color:#F0F6FF;padding:10px 10px 10px 10px;">';
 							for ($j=0;$j<$size2;$j++)
 							{
 								$temp2=$comments[$j];
 								echo "<h6> Comment by :". User::getUser($temp2['commentor_id'])->name."</h6>";
-								echo $temp2['text']."<br>";								
+								echo $temp2['text']."<br>";
 							}
-							echo "<br> <hr> <br>";
+							echo '</div>';
+							echo '<textarea rows="2" cols="50" id="newCommentpostNo'.$temp['post_id'].'" placeholder="Enter Comment here"> </textarea>';
+							echo '<button class="btn btn-xs" onclick="addComment('.$temp['post_id'].','.$user->userId.','.$wallUser->userId.')">Add Comment</button></h4>';
+							echo "<br> <hr> <br>";							
 							echo '</div>';
 						}
 					?>

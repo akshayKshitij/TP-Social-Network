@@ -53,6 +53,7 @@ class User
 
     
   }
+  
   public function suggestions($id)
   { 
     $conn = new mysqli(Database::$servername, Database::$username,Database::$password,Database::$db);
@@ -90,6 +91,7 @@ class User
     $sql2="DROP VIEW level2";
     mysqli_query($conn,$sql1);
     mysqli_query($conn,$sql2);
+    return $row1;
     /*foreach($row1 as $x => $x_value) 
      {
        echo "Key=" . $x . ", Value=" . $x_value;
@@ -114,7 +116,7 @@ class User
     if (!$conn) {
         die("Connection failed: " . mysqli_connect_error());
     }
-    $sql="SELECT * FROM User WHERE name='$search'";
+    $sql="SELECT * FROM User WHERE name LIKE '%$search%'";
     $result=mysqli_query($conn,$sql);
     $i=0;
     while($row=mysqli_fetch_assoc($result))
@@ -149,7 +151,7 @@ class User
        echo "Key=" . $x . ", Value=" . $x_value;
        echo "<br>";
      } 
-     
+     return $FINAL;
 
   }
   public function checkname($store,$id)

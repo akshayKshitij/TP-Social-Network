@@ -53,7 +53,63 @@ class User
 
     
   }
-  public function search($id,$search)
+  
+  public function suggestions($id)
+  { 
+    $conn = new mysqli(Database::$servername, Database::$username,Database::$password,Database::$db);
+
+    if (!$conn) {
+        die("Connection failed: " . mysqli_connect_error());
+    }
+    $sql="CREATE VIEW level1 AS SELECT id1 'i1',id2 'i2' FROM Friends WHERE id1='$id'";
+    mysqli_query($conn,$sql);
+    $sql1="CREATE VIEW level2 AS SELECT Friends.id1,Friends.id2 FROM Friends INNER JOIN level1 ON Friends.id1=level1.i2 WHERE Friends.id2!='$id'";
+    mysqli_query($conn,$sql1);
+    $sql2="SELECT * FROM level2";
+    $result=mysqli_query($conn,$sql2);
+    $i=0;
+    $row=mysqli_fetch_assoc($result);
+    if($row!=null)
+    {
+        $temp=$row["id1"];
+        $temp1=$row["id2"];
+        $row1["$temp1"]=1;
+    }
+    while($row=mysqli_fetch_assoc($result))
+    {       
+            $temp=$row["id1"];
+            $temp1=$row["id2"];
+            $t1=$this->check($row1,$temp1);
+            if($t1==-1)
+                $row1["$temp1"]=1;
+            else
+                $row1["$temp1"]++;
+            
+    }
+    arsort($row1);
+    $sql1="DROP VIEW level1";
+    $sql2="DROP VIEW level2";
+    mysqli_query($conn,$sql1);
+    mysqli_query($conn,$sql2);
+    return $row1;
+    /*foreach($row1 as $x => $x_value) 
+     {
+       echo "Key=" . $x . ", Value=" . $x_value;
+       echo "<br>";
+     } */         
+    
+  }
+  public function check($row1,$id)
+  {
+
+     foreach($row1 as $x => $x_value) 
+     {
+        if($id==$x)
+            return 1;
+     }
+     return -1;
+  }
+  public function search($id,$search,$a,$b,$c)
   {
     $conn = new mysqli(Database::$servername, Database::$username,Database::$password,Database::$db);
 
@@ -69,21 +125,33 @@ class User
             $row1["$id1"][0]=0;
             $row1["$id1"][1]=0;
             $row1["$id1"][2]=0;
+            $row1["$id1"][3]=0.0;
             $store[$i]=$id1;
             $i++;
-            //echo $id;
     }
     
-     $this->checkname($store,$id); 
-     echo "START NOW<br>";
+     //$this->checkname($store,$id); 
      $this->proximity($id,$search,$row1,$conn,$store);
      $this->interaction($id,$search,$row1,$conn,0.6,0.4,$store);
-     foreach($row1 as $x ) 
-     {
-         echo $x[2] . "\n";
-         echo "<br>";
-     }
+     $this->similarity($id,$search,$row1,$conn,$store);
 
+     $temp=count($store);
+     for($x=0;$x<$temp;$x++)
+     {
+        $index=$store[$x];
+        $t1=(float)($a*$row1["$index"][0]);
+        $t2=(float)($b*$row1["$index"][1]);
+        $t3=(float)($c*$row1["$index"][2]);
+        $row1["$index"][3]=$t1+$t2+$t3;
+        $FINAL["$index"]=$row1["$index"][3];
+     }
+     arsort($FINAL);
+     foreach($FINAL as $x => $x_value) 
+     {
+       echo "Key=" . $x . ", Value=" . $x_value;
+       echo "<br>";
+     } 
+     return $FINAL;
 
   }
   public function checkname($store,$id)
@@ -97,7 +165,7 @@ class User
     }
     return -1;
   }
-public function proximity($id,$search,&$row1,$conn,$store)
+  public function proximity($id,$search,&$row1,$conn,$store)
   {
  
     $sql="CREATE VIEW level1 AS SELECT id1 'i1',id2 'i2' FROM Friends WHERE id1='$id'";
@@ -111,8 +179,7 @@ public function proximity($id,$search,&$row1,$conn,$store)
             if($t1!=-1)
             {
                 $row1["$temp"][0]=1;
-                echo $temp;
-                echo "KSHIIJ<br>";
+                
             }
                 
     }
@@ -127,8 +194,6 @@ public function proximity($id,$search,&$row1,$conn,$store)
             if($t1!=-1 && $row1["$temp"][0]==0)
             {   
                 $row1["$temp"][0]=1/2;
-                echo $temp;
-                echo "KSHIIJ 2<br>";
             }   
     }
     $sql1="CREATE VIEW level3 AS SELECT Friends.id1,Friends.id2 FROM Friends INNER JOIN level2 ON Friends.id1=level2.id2";
@@ -142,8 +207,6 @@ public function proximity($id,$search,&$row1,$conn,$store)
             if($t1!=-1 && $row1["$temp"][0]==0)
             {   
                 $row1["$temp"][0]=1/3;
-                echo $temp;
-                echo "KSHIIJ 3<br>";
             }
     }
     $sql1="DROP VIEW level1";
@@ -166,8 +229,6 @@ public function proximity($id,$search,&$row1,$conn,$store)
         if($t1!=-1)
         {   
                 $rowp["$temp"][2]++;
-                echo $temp;
-                echo "TOMAE<br>";
         }
     }
     
@@ -180,8 +241,6 @@ public function proximity($id,$search,&$row1,$conn,$store)
         if($t1!=-1)
         {   
                 $rowp["$temp"][2]++;
-                echo $temp;
-                echo "TOMAr 1<br>";
         }
     } 
     
@@ -194,8 +253,6 @@ public function proximity($id,$search,&$row1,$conn,$store)
         if($t1!=-1)
         {   
                 $rowc["$temp"][2]++;
-                echo $temp;
-                echo "TOMAR 2<br>";
         }
     }
     $sql="Select commentor_id,user_id FROM comment WHERE commentor_id='$id'";
@@ -207,8 +264,6 @@ public function proximity($id,$search,&$row1,$conn,$store)
         if($t1!=-1)
         {   
                 $rowc["$temp"][2]++;
-                echo $temp;
-                echo "TOMAR 3<br>";
         }
     }
     $size=count($store);
@@ -216,7 +271,7 @@ public function proximity($id,$search,&$row1,$conn,$store)
     {       
         $index=$store[$x];
         $temp=$rowp["$index"][2];
-        echo $temp;
+
         if($temp!=0)
             $temp=(float)(1-1/$temp);
         else
@@ -229,10 +284,95 @@ public function proximity($id,$search,&$row1,$conn,$store)
             $temp1=0;
         $temp2=$a*$temp+$b*$temp1;
         $row1["$index"][2]=$temp2;
-        echo $row1["$index"][2];
-        echo "answer<br>";
     }
     
+  }
+  public function similarity($id,$search,&$row1,$conn,$store)
+  {
+    $rowden=$row1;
+    $rownum=$row1;
+    $sql="CREATE VIEW tempuser AS SELECT interest_text FROM Interest WHERE user_id='$id'";
+    mysqli_query($conn,$sql);
+    $sql4="SELECT COUNT(*) AS common FROM tempuser";
+    $result=mysqli_query($conn,$sql4);
+    $row=mysqli_fetch_assoc($result);
+    $user_int=$row['common'];
+    
+    $size=count($store);
+    for($x=0;$x<$size;$x++)
+    {       
+        $index=$store[$x];
+        $sql2="CREATE VIEW temp1 AS SELECT interest_text 'hobby' FROM Interest WHERE user_id='$index'";
+        mysqli_query($conn,$sql2);
+        
+        $sql4="SELECT COUNT(*) AS common FROM temp1";
+        $result=mysqli_query($conn,$sql4);
+        $row=mysqli_fetch_assoc($result);
+        $rowden["$index"][1]=$row['common']+$user_int;
+        
+        $sql3="CREATE VIEW temp2 AS SELECT interest_text 'hobby2' FROM tempuser INNER JOIN temp1 ON temp1.hobby=tempuser.interest_text";
+        mysqli_query($conn,$sql3);
+        
+        $sql4="SELECT COUNT(*) AS common FROM temp2";
+        $result=mysqli_query($conn,$sql4);
+        $row=mysqli_fetch_assoc($result);
+        $answer=$row['common'];
+        $rownum["$index"][1]=$answer;
+        $rowden["$index"][1]-=$answer;
+        $sql1="DROP VIEW temp1";
+        $sql2="DROP VIEW temp2";
+        mysqli_query($conn,$sql1);
+        mysqli_query($conn,$sql2);
+    }
+    $sql1="DROP VIEW tempuser";
+    mysqli_query($conn,$sql1);
+    
+    $sql="SELECT country,age FROM User WHERE user_id='$id'";
+    $result=mysqli_query($conn,$sql);
+    $row=mysqli_fetch_assoc($result);
+    $country=$row['country'];
+    $age=$row['age'];
+    
+    $sql="CREATE VIEW temp4 AS SELECT user_id FROM User WHERE country='$country'";
+    mysqli_query($conn,$sql);
+    $sql2="SELECT * FROM temp4";
+    $result=mysqli_query($conn,$sql2);
+    while($row=mysqli_fetch_assoc($result))
+    {       
+            $temp=$row["user_id"];
+            $t1=$this->checkname($store,$temp);
+            if($t1!=-1)
+            {   
+                $rownum["$temp"][1]+=2;
+            }   
+    }
+    $sql1="DROP VIEW temp4";
+    mysqli_query($conn,$sql1);
+    $lower=$age-2;
+    $upper=$age+2;
+    $sql="CREATE VIEW temp6 AS SELECT user_id FROM User WHERE age BETWEEN '$lower' AND '$upper'";
+    mysqli_query($conn,$sql);
+    $sql2="SELECT * FROM temp6";
+    $result=mysqli_query($conn,$sql2);
+    while($row=mysqli_fetch_assoc($result))
+    {       
+            $temp=$row["user_id"];
+            $t1=$this->checkname($store,$temp);
+            if($t1!=-1)
+            {   
+                $rownum["$temp"][1]+=5;
+            }   
+    }
+    $sql1="DROP VIEW temp6";
+    mysqli_query($conn,$sql1);
+    for($x=0;$x<$size;$x++)
+    {
+        $index=$store[$x];
+        $numerator=$rownum["$index"][1];
+        $denominator=$rowden["$index"][1]+7;
+        $row1["$index"][1]=$numerator/$denominator;
+
+    }
   }
   public function register()
   {
@@ -241,6 +381,7 @@ public function proximity($id,$search,&$row1,$conn,$store)
     if (!$conn) {
         die("Connection failed: " . mysqli_connect_error());
     }
+
     $hash=password_hash($this->password, PASSWORD_DEFAULT);
     $sql="SELECT * FROM User where username='$this->username'";
     $result=mysqli_query($conn,$sql);
@@ -250,7 +391,7 @@ public function proximity($id,$search,&$row1,$conn,$store)
     	$mess="USERNAME IS ALREADY IN USE PLEASE GO BACK AND CHOOSE ANOTHER <br><a href='register.html'>CLICK HERE TO TRY AGAIN</a><br>";
     }
     else{
-		$sql1="INSERT INTO User (name,username,email,password,age,country,gender,dob) VALUES ('".$this->name."', '".$this->username."','".$this->email."','".$hash."','".$this->age."','".$this->country."','".$this->gender."','".$this->date."')";
+		$sql1="INSERT INTO User (name,username,email,password,age,country,gender,dob,work_college) VALUES ('".$this->name."', '".$this->username."','".$this->email."','".$hash."','".$this->age."','".$this->country."','".$this->gender."','".$this->date."','".$this->workCollege."')";
 		mysqli_query($conn,$sql1);
 
 		$mess="registration successful <br><a href='login.html'>CLICK HERE TO LOGIN</a><br>";
@@ -427,6 +568,37 @@ public function proximity($id,$search,&$row1,$conn,$store)
 		
 	$conn->close();
 	return $posts;
+  }
+  
+  
+  public function getInterests()
+  {
+  	// Create connection
+	$conn = new mysqli(Database::$servername, Database::$username,Database::$password,Database::$db);
+	// Check connection
+	if ($conn->connect_error) 
+	{
+		die("Connection failed: " . $conn->connect_error);
+	}
+	$conn = new mysqli(Database::$servername, Database::$username,Database::$password,Database::$db);
+	$id=$this->userId;
+  	$sql = "SELECT interest_text FROM Interest WHERE user_id=$id";
+	$result = $conn->query($sql);
+
+	if ($result->num_rows > 0) {
+		$interests=array();
+		while($row = $result->fetch_assoc()) 
+		{
+			array_push($interests,$row);
+	    }
+	} 
+	else 
+	{
+	    $interests=null;
+	    echo "No interests found";
+	}
+	$conn->close();
+	return $interests;
   }
   
 }

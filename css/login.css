@@ -1,4 +1,4 @@
-/* Reset CSS */
+
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -17,7 +17,7 @@ table, caption, tbody, tfoot, thead, tr, th, td {
     background: transparent;
 }
 body {
-    background: #DCDDDF url(http://cssdeck.com/uploads/media/items/7/7AF2Qzt.png);
+    background: #CCFFFF;
     color: #000;
     font: 14px Arial;
     margin: 0 auto;
@@ -155,7 +155,7 @@ form:after {
     -ms-transition: all 0.5s ease;
     -o-transition: all 0.5s ease;
     transition: all 0.5s ease;
-    background: #eae7e7 url(http://cssdeck.com/uploads/media/items/8/8bcLQqF.png) no-repeat;
+    background: #eae7e7 
     border: 1px solid #c8c8c8;
     color: #777;
     font: 13px Helvetica, Arial, sans-serif;

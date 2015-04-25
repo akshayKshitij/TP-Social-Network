@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Apr 12, 2015 at 07:57 PM
+-- Generation Time: Apr 25, 2015 at 04:43 PM
 -- Server version: 5.6.21
 -- PHP Version: 5.6.3
 
@@ -32,7 +32,23 @@ CREATE TABLE IF NOT EXISTS `comment` (
   `commentor_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `text` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `comment`
+--
+
+INSERT INTO `comment` (`comment_id`, `post_id`, `commentor_id`, `user_id`, `text`) VALUES
+(1, 2, 5, 3, 'haha'),
+(2, 30, 6, 6, 'aaee'),
+(3, 30, 6, 6, ' aa'),
+(4, 30, 6, 6, ' rr'),
+(5, 30, 6, 6, ' aaass'),
+(6, 30, 6, 6, ' rew'),
+(7, 30, 6, 6, ' eqq'),
+(8, 40, 6, 7, ''),
+(9, 40, 6, 7, ' asss'),
+(10, 40, 6, 7, ' eee');
 
 -- --------------------------------------------------------
 
@@ -45,6 +61,20 @@ CREATE TABLE IF NOT EXISTS `Friends` (
   `id2` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `Friends`
+--
+
+INSERT INTO `Friends` (`id1`, `id2`) VALUES
+(4, 5),
+(5, 4),
+(5, 6),
+(5, 7),
+(6, 5),
+(6, 7),
+(7, 5),
+(7, 6);
+
 -- --------------------------------------------------------
 
 --
@@ -56,6 +86,13 @@ CREATE TABLE IF NOT EXISTS `Friend_Requests` (
   `receiver_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `Friend_Requests`
+--
+
+INSERT INTO `Friend_Requests` (`sender_id`, `receiver_id`) VALUES
+(4, 6);
+
 -- --------------------------------------------------------
 
 --
@@ -66,7 +103,17 @@ CREATE TABLE IF NOT EXISTS `Interest` (
 `entry_id` int(11) NOT NULL,
   `interest_text` varchar(50) NOT NULL,
   `user_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `Interest`
+--
+
+INSERT INTO `Interest` (`entry_id`, `interest_text`, `user_id`) VALUES
+(1, 'Football', 6),
+(5, 'Badminton', 6),
+(6, 'Chess', 6),
+(7, 'Programming', 6);
 
 -- --------------------------------------------------------
 
@@ -124,7 +171,52 @@ CREATE TABLE IF NOT EXISTS `Post` (
   `poster_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `Text` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=42 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `Post`
+--
+
+INSERT INTO `Post` (`post_id`, `poster_id`, `user_id`, `Text`) VALUES
+(2, 4, 4, 'Yeah i''m back'),
+(22, 4, 4, '<p>sdfg</p>'),
+(23, 4, 4, '<p>aaa</p>'),
+(24, 4, 4, '<p>asdfaaa</p>'),
+(25, 4, 4, '<p>asdf</p>'),
+(26, 4, 4, '<p>aaa</p>'),
+(27, 4, 0, '5'),
+(28, 4, 5, '<p>wasssup?????</p>'),
+(29, 5, 6, '<p>ASDFS</p>'),
+(30, 5, 6, '<p>aaa</p>'),
+(34, 5, 5, '<p>adfsd</p>'),
+(35, 5, 6, '<p>taa</p>'),
+(36, 4, 5, '<p>asd</p>'),
+(37, 4, 5, '<p>as</p>'),
+(38, 4, 5, '<p>as</p>'),
+(39, 4, 5, '<p>aqqq</p>'),
+(40, 6, 7, '<p>asss</p>'),
+(41, 35, 35, '6');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `Post_Notifications`
+--
+
+CREATE TABLE IF NOT EXISTS `Post_Notifications` (
+`post_notification_id` int(11) NOT NULL,
+  `posted_to_id` int(11) NOT NULL,
+  `posted_by_id` int(11) NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `Post_Notifications`
+--
+
+INSERT INTO `Post_Notifications` (`post_notification_id`, `posted_to_id`, `posted_by_id`) VALUES
+(1, 5, 4),
+(2, 5, 4),
+(3, 5, 4);
 
 -- --------------------------------------------------------
 
@@ -143,7 +235,17 @@ CREATE TABLE IF NOT EXISTS `User` (
   `gender` tinyint(1) NOT NULL,
   `dob` date NOT NULL,
   `work_college` varchar(100) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `User`
+--
+
+INSERT INTO `User` (`user_id`, `name`, `username`, `email`, `password`, `age`, `country`, `gender`, `dob`, `work_college`) VALUES
+(4, 'Akshay U', 'akshayu', 'asd@sdf.in', '$2y$10$UHfV3.lTIPQwCpdjkW2PY.1BgMY7xbrSsRnFsMZYP/9s8jOZEyEzW', 23, 'India', 0, '0000-00-00', NULL),
+(5, 'Kshitij T', 'kshitij', 'assdd@sdf.in', '$2y$10$RvZQftxefuGGNZ/fDB6FLuUKUb0WKA53J0MH65GAjgzTOsXr1i.Gq', 23, 'India', 0, '2015-04-08', NULL),
+(6, 'Vishal R', 'vishal', 'assddas@sdf.in', '$2y$10$bybaQxeu2E6KYnOoVDfI0..in3bnb2WMpbc7yygF763ZCDre6P2f2', 23, 'India', 0, '2015-04-01', NULL),
+(7, 'Akshay Varma', 'varma', 'asd@sdf.in', '$2y$10$zP3.WacQwVy.e6Bz6srVRed2V76GpkHenXRiBULc3q.h.Bc9JLrea', 23, 'India', 0, '0000-00-00', NULL);
 
 --
 -- Indexes for dumped tables
@@ -198,6 +300,12 @@ ALTER TABLE `Post`
  ADD PRIMARY KEY (`post_id`);
 
 --
+-- Indexes for table `Post_Notifications`
+--
+ALTER TABLE `Post_Notifications`
+ ADD PRIMARY KEY (`post_notification_id`);
+
+--
 -- Indexes for table `User`
 --
 ALTER TABLE `User`
@@ -211,12 +319,12 @@ ALTER TABLE `User`
 -- AUTO_INCREMENT for table `comment`
 --
 ALTER TABLE `comment`
-MODIFY `comment_id` int(11) NOT NULL AUTO_INCREMENT;
+MODIFY `comment_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=11;
 --
 -- AUTO_INCREMENT for table `Interest`
 --
 ALTER TABLE `Interest`
-MODIFY `entry_id` int(11) NOT NULL AUTO_INCREMENT;
+MODIFY `entry_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=8;
 --
 -- AUTO_INCREMENT for table `Notifications`
 --
@@ -236,12 +344,17 @@ MODIFY `poll_question_id` int(11) NOT NULL AUTO_INCREMENT;
 -- AUTO_INCREMENT for table `Post`
 --
 ALTER TABLE `Post`
-MODIFY `post_id` int(11) NOT NULL AUTO_INCREMENT;
+MODIFY `post_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=42;
+--
+-- AUTO_INCREMENT for table `Post_Notifications`
+--
+ALTER TABLE `Post_Notifications`
+MODIFY `post_notification_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `User`
 --
 ALTER TABLE `User`
-MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT;
+MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=8;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

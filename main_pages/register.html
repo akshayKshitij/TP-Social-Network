@@ -1,10 +1,37 @@
 <!DOCTYPE html>
 <html>
-<form action="register_validate.php" method="post">
+<head>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<link href="../css/bootstrap.min.css" rel="stylesheet">
+<link href="../css/select2.css" rel="stylesheet">
+<script src="../js/bootstrap.min.js"></script>
+<script src="../js/select2.js"></script>
+
+<script>
+$(document).ready(function() {
+  $("#selectBox").select2();
+  $("input").addClass(".form-control");
+});
+</script>
+
+
+<style>
+body {
+    height: 200px;
+    background: -webkit-linear-gradient(left, white , #0066CC); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(right, white, #0066CC); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(right, white, #0066CC); /* For Firefox 3.6 to 15 */
+    background: linear-gradient(to right, white , #0066CC); /* Standard syntax (must be last) */
+}
+</style>
+</head>
+<body>
+<h2> REGISTRATION FORM </h2>
+<form action="register_validate.php" class="form-horizontal" method="post" role="form">
+<div class="form-group" style="margin-left:100px">
 NAME:&nbsp &nbsp &nbsp &nbsp
 <input type="text" name="name" required>
 <br><br>
-<br>
 Username:&nbsp &nbsp &nbsp &nbsp
 <input type="text" name="username" required>
 <br><br>
@@ -17,8 +44,8 @@ Email:&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp
 Age:&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp
 <input type="number" name="age" required>
 <br><br>
-Country:&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp
-<select name="country">
+Country: &nbsp &nbsp &nbsp
+<select name="country" id="selectBox" style="width:200px">
 <option value="">Country...</option>
 <option value="Afganistan">Afghanistan</option>
 <option value="Albania">Albania</option>
@@ -277,10 +304,12 @@ Date Of Birth: <input type="date" name="dob">
 <br><br>
 Work/School: <input type="text" name="work">
 <br><br>
-<input type="submit" value="register">
+
+<input class="btn btn-md btn-success" type="submit" value="Register">
 
 <br><br>
 <br><br><br><br>
-
+</div>
 </form>
+</body>
 </html>

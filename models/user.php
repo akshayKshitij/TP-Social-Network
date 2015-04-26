@@ -63,6 +63,14 @@ class User
     }
     $sql="CREATE VIEW level1 AS SELECT id1 'i1',id2 'i2' FROM Friends WHERE id1='$id'";
     mysqli_query($conn,$sql);
+    $sql="SELECT * FROM level1";
+    $result=mysqli_query($conn,$sql);
+    $i=0;
+    while($row=mysqli_fetch_assoc($result))
+    {
+        $orig[$i]=$row["i2"];
+        $i++;
+    }
     $sql1="CREATE VIEW level2 AS SELECT Friends.id1,Friends.id2 FROM Friends INNER JOIN level1 ON Friends.id1=level1.i2 WHERE Friends.id2!='$id'";
     mysqli_query($conn,$sql1);
     $sql2="SELECT * FROM level2";
@@ -86,12 +94,24 @@ class User
                 $row1["$temp1"]++;
             
     }
-    arsort($row1);
+    foreach($row1 as $x => $x_value) 
+    {
+        if($this->checkname($orig,$x)==-1)
+        {
+            $row2["$x"]=$x_value;
+        }
+    }
+    arsort($row2);
+    /*foreach($row2 as $x => $x_value) 
+     {
+       echo "Key=" . $x . ", Value=" . $x_value;
+       echo "<br>";
+     }*/
     $sql1="DROP VIEW level1";
     $sql2="DROP VIEW level2";
     mysqli_query($conn,$sql1);
     mysqli_query($conn,$sql2);
-    return $row1;
+    return $row2;
     /*foreach($row1 as $x => $x_value) 
      {
        echo "Key=" . $x . ", Value=" . $x_value;

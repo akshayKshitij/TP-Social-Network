@@ -85,10 +85,10 @@ function deleteRequest(requesterId,userId,requesterName)
 							//Enclose the friend in a div which has id as its post_id.
 							echo '<div id="friendRequesterNo'.$temp['user_id'].'">';
 							echo '<h4><img src="uploads/'.$temp['user_id'].'.jpg" alt="Profile Photo" width="50" height="65" > &nbsp &nbsp';
-							echo $temp['name'];
+							echo $temp['name']."</h4>";
 							
-							echo '<button class="btn btn-sm btn-success pull-right" onclick="addFriend('.$temp['user_id'].','.$user->userId.',\''.$temp['name'].'\')" style="margin-left:10px">Accept Friend Request</button> &nbsp';
-							echo '<button class="btn btn-sm btn-danger pull-right" onclick="deleteRequest('.$temp['user_id'].','.$user->userId.',\''.$temp['name'].'\')">Delete Request</button></h4>';
+							echo '<button class="btn btn-sm btn-success pull-right" onclick="addFriend('.$temp['user_id'].','.$user->userId.',\''.$temp['name'].'\')" style="margin-left:10px">Accept Friend Request</button> ';
+							echo '<button class="btn btn-sm btn-danger pull-right" onclick="deleteRequest('.$temp['user_id'].','.$user->userId.',\''.$temp['name'].'\')">Delete Request</button>';
 							
 							echo '<form style="margin-top:5px" action="friendPage.php" method="POST"><button type="submit" class="btn btn-sm btn-primary ">View Profile</button><input type="hidden" name="wall_id" value="'.$temp['user_id'].'"></form>';
 							

@@ -1,5 +1,5 @@
 <?php
-    //require '../settings.php';
+    //validate if the registering person's data is okay. create a new person
     require '../models/user.php';
     function checkpass($data) 
     {
@@ -23,7 +23,7 @@
     else
         $new->gender=1;
     $new->workCollege=$_POST['work'];
-    
+    //write the person to the database
     $new->register();
 ?>
 

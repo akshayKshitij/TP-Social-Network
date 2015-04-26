@@ -15,6 +15,7 @@ Class Friends
   	{
   	}
   
+  	//delete the friendship between id1 and id2
  	public function unfriend()
  	{
  		// Create connection
@@ -39,6 +40,7 @@ Class Friends
 		return null; 
  	}
  	
+ 	//save a friendship between id1,id2 to the database
  	public function save()
  	{
  		// Create connection
@@ -71,6 +73,7 @@ Class Friends
 		return null; 
  	}
  	
+ 	//checks if user1 and user2 are friends
  	public static function areFriends($user1,$user2)
  	{
  		// Create connection
@@ -107,6 +110,7 @@ Class FriendRequests
 	//The person who made the friend request.
  	public $receiverId;
  	
+ 
  	public function __construct($a1,$a2)
   	{
       	$this->senderId=$a1;
@@ -117,6 +121,7 @@ Class FriendRequests
   	{
   	}
   	
+  	//delete the current friend request from the database
   	public function delete()
  	{
  		// Create connection
@@ -141,6 +146,7 @@ Class FriendRequests
 		return null; 
  	}
  	
+ 	//check if request has been sent from sender to receiver
  	public static function sentRequest($sender,$receiver)
  	{
  		// Create connection
@@ -168,6 +174,7 @@ Class FriendRequests
 		return $requestSent;
  	}
  	
+ 	//add a friend request to the database from this-senderId to this-receiver-Id.
  	public function add()
  	{
  		// Create connection

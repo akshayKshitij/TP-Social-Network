@@ -42,7 +42,7 @@ else
 		 	<!--Sidebar-->
 		 	<?php include 'sidebar_navbar/sidebar.php'; ?> 	
 		</div>
-
+	<!--Central Section-->
 		<div class="col-lg-6" style="background-color:#FBFBFB;height:700px">
 				<h3 id="heading"> SEARCH RESULT </h3>
 				<div id="content" style="margin-left:30px;margin-right:200px;">
@@ -50,6 +50,8 @@ else
 					//edit this to include Kshitij's function
 						$personSearch=$user->search($user->userId,$searchQuery,Settings::$proximitiyCoeff,Settings::$interactionCoeff,Settings::$similarityCoeff);
 						$size=count($personSearch);
+						//Run a loop to print all the people in the relevant search
+						
 						foreach($personSearch as $person => $x) 
 						{
 							$temp=User::getUser($person);

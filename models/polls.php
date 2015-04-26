@@ -1,5 +1,6 @@
 <?php
 
+//NOT IMPLEMENTED YET
 public Class PollQuestion
 {
 	//primary key for identification

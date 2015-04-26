@@ -31,6 +31,7 @@ else
 
 <!--JAVASCRIPT-->
 <script>
+//Adding a Post on a friend's wall (Syntax taken from W3 schools site)
 function addPostToFriend(userid,wallid)
 {
 	var xmlhttp = new XMLHttpRequest();
@@ -57,7 +58,8 @@ function addPostToFriend(userid,wallid)
     xmlhttp.send();
    
 }
-//will be called from a line in the navbar
+//will be called from a line in the sidebar
+//sends a request to a person - 
 function sendRequest(senderId,receiverId,receiverName)
 {
 	var xmlhttp = new XMLHttpRequest();
@@ -74,6 +76,7 @@ function sendRequest(senderId,receiverId,receiverName)
 
 }
 
+//used to add a comment
 function addComment(postId,commentorId,userId)
 {
 	
@@ -110,6 +113,7 @@ function addComment(postId,commentorId,userId)
 		 	<?php include 'sidebar_navbar/friendPost_sidebar.php'; ?>		 	
 		</div>
 
+		<!--Centre Part-->
 		<div class="col-lg-6" style="background-color:#FBFBFB;height:700px">
 				<h3 id="heading"> <?php echo $wallUser->name ?>'s POSTS </h3>
 				<div style="margin-left:30px;margin-right:30px;">
@@ -122,8 +126,8 @@ function addComment(postId,commentorId,userId)
 				
 					<?php
 						$posts=$wallUser->getPosts();
-						//echo implode(" ",$posts);
 						$size=count($posts);
+						//Iteratively print each post and its comments
 						for ($i=0;$i<$size;$i++)
 						{
 							$temp=$posts[$size-$i-1];
@@ -154,7 +158,7 @@ function addComment(postId,commentorId,userId)
 		</div>
 		
 		<div class="col-lg-3" style="background-color:#F2F2EB;height:700px">
-		 	<!--Sidebar-->
+		 	<!--Rightbar-->
 		 	<?php include 'sidebar_navbar/friend_rightbar.php'; ?>		 	
 		</div>
 

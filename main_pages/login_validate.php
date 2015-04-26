@@ -1,6 +1,6 @@
 <?php
     require '../models/user.php';
-
+	//check if the login in person's details are valid.
     function checkpass($data) 
     {
       $data = trim($data);

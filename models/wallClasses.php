@@ -9,6 +9,7 @@ Class Post
  	public $userId;
  	public $text;
  	
+ 	//get comments made on the given id's wall
  	public static function getComments($id)
  	{
 		  	// Create connection
@@ -38,6 +39,7 @@ Class Post
 			return $comments;
 	}
 	
+	//Given the post id, delete the post
 	public static function deletePost($id)
 	{
 		// Create connection
@@ -60,6 +62,7 @@ Class Post
 		return null;
 	}
 	
+	// id is the id of the person who posted on his own wall. The text is the text of the post
 	public static function addPost($id,$text)
 	{
 		// Create connection
@@ -81,6 +84,7 @@ Class Post
 		return $post_id;
 	}
 	
+	//Add a post by poster_id to the wall_id saying $text
 	public static function addPostToFriend($poster_id,$text,$wall_id)
 	{
 		// Create connection
@@ -123,6 +127,7 @@ Class Comment
  	public $postId;
  	public $text;
  	
+ 	//add a comment by the commentorId on the PostId on the userId's wall, with the commentText
  	public static function addComment($postId,$commentorId,$userId,$commentText)
 	{
 		// Create connection

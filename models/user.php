@@ -54,6 +54,7 @@ class User
     
   }
   
+  //gives friend suggestions for the given user's id
   public function suggestions($id)
   { 
     $conn = new mysqli(Database::$servername, Database::$username,Database::$password,Database::$db);
@@ -102,21 +103,11 @@ class User
         }
     }
     arsort($row2);
-    /*foreach($row2 as $x => $x_value) 
-     {
-       echo "Key=" . $x . ", Value=" . $x_value;
-       echo "<br>";
-     }*/
     $sql1="DROP VIEW level1";
     $sql2="DROP VIEW level2";
     mysqli_query($conn,$sql1);
     mysqli_query($conn,$sql2);
-    return $row2;
-    /*foreach($row1 as $x => $x_value) 
-     {
-       echo "Key=" . $x . ", Value=" . $x_value;
-       echo "<br>";
-     } */         
+    return $row2;       
     
   }
   public function check($row1,$id)
@@ -428,6 +419,7 @@ class User
     echo $mess;
   } 
 
+//returns a user object with all the fields, given the object
   public static function getUser($id)
   {
   	// Create connection
@@ -462,6 +454,7 @@ class User
 	return $user;
   }
 
+//gets all posts for the current user
   public function getPosts()
   {
   	// Create connection
@@ -492,6 +485,7 @@ class User
 	return $posts;
   }
   
+  //gets the current user's friends
   public function getFriends()
   {
   	// Create connection
@@ -525,6 +519,7 @@ class User
 	return $friends;
   }
   
+  //gets current user's friend requests
   public function getFriendRequests()
   {
   	// Create connection
@@ -559,7 +554,7 @@ class User
   }
   
   
-  
+  //gets the current user's notifications
   public function getPostNotifications()
   {
   	// Create connection
@@ -599,7 +594,7 @@ class User
 	return $posts;
   }
   
-  
+  //get the current user's interests
   public function getInterests()
   {
   	// Create connection
@@ -630,6 +625,7 @@ class User
 	return $interests;
   }
   
+  //add the given interest to the given userId
   public static function addInterest($userId,$interest_text)
   {
   		// Create connection

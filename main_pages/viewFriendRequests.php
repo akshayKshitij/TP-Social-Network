@@ -23,6 +23,7 @@ $user=User::getUser($_SESSION['user_id']);
 
 <!--JAVASCRIPT-->
 <script>
+//ajax call for accepting friend request
 function addFriend(requesterId,userId,requesterName)
 {
 	var xmlhttp = new XMLHttpRequest();
@@ -41,6 +42,7 @@ function addFriend(requesterId,userId,requesterName)
 
 }
 
+//delete the friend request (ajax call)
 function deleteRequest(requesterId,userId,requesterName)
 {
 	var xmlhttp = new XMLHttpRequest();
@@ -72,7 +74,7 @@ function deleteRequest(requesterId,userId,requesterName)
 		 	<!--Sidebar-->
 		 	<?php include 'sidebar_navbar/viewFriendRequests_sidebar.php'; ?> 	
 		</div>
-
+			<!--Central Part-->
 		<div class="col-lg-6" style="background-color:#FBFBFB;height:700px">
 				<h3 id="heading"> FRIEND REQUEST </h3>
 				<div id="content" style="margin-left:30px;margin-right:200px;">

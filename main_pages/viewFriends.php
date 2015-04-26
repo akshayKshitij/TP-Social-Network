@@ -23,6 +23,7 @@ $user=User::getUser($_SESSION['user_id']);
 
 <!--JAVASCRIPT-->
 <script>
+//delete friendship between friendId and userId
 function unfriend(friendId,userId,friendName)
 {
 	var xmlhttp = new XMLHttpRequest();
@@ -34,7 +35,6 @@ function unfriend(friendId,userId,friendName)
 			var child = document.getElementById("friendNo"+friendId);
 			parent.removeChild(child);
 			$.toaster({ priority : 'info', title : 'TP', message : friendName + " has been unfriended"});
-			//alert(xmlhttp.responseText);
         }
     }
     xmlhttp.open("GET", "../ajax/unfriend.php?q=" + userId.toString() + "&r=" +friendId.toString(), true);

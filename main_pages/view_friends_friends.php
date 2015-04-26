@@ -39,13 +39,14 @@ $wallUser=User::getUser($_SESSION['wall_id']);
 		 	<!--Sidebar-->
 		 	<?php include 'sidebar_navbar/friendViewFriends_sidebar .php'; ?> 	
 		</div>
-
+			<!--Central Part-->
 		<div class="col-lg-6" style="background-color:#FBFBFB;height:700px">
 				<h3 id="heading"> <?php echo $wallUser->name ?>'s FRIENDS </h3>
 				<div id="content" style="margin-left:30px;margin-right:30px;">
 					<?php
 						$friends=User::getUser($wallUser->userId)->getFriends();
 						$size=count($friends);
+						//loop through all your friends' friends and print them 
 						for ($i=0;$i<$size;$i++)	
 						{
 							$temp=$friends[$size-$i-1];
@@ -70,7 +71,7 @@ $wallUser=User::getUser($_SESSION['wall_id']);
 		</div>
 
 		<div class="col-lg-3" style="background-color:#F2F2EB;height:700px">
-		 	<!--Sidebar-->
+		 	<!--RightBarbar-->
 		 	<?php include 'sidebar_navbar/friend_rightbar.php'; ?>		 	
 		</div>
 </div>
